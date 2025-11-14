@@ -3,12 +3,38 @@ import { use, useState } from "react";
 import styled from "styled-components";
 
 const DiceRoller = () => {
-    const [ dieResult, setDieResult ] = useState(1);
+    const [ dieResult, setDieResult ] = useState(null);
+    const [ dieIsRolling, setDieIsRolling ] = useState(false);
+    const [ temporaryDie, setTemporaryDie ] = useState(null);
+
+    //dice modifications
     const [ dieMaxValue, setDieMaxValue ] = useState(20);
     const [ selectedDie, setSelectedDie ] = useState(20);
 
+    //dice log
+    const [ diceHistory, setDiceHistory ] = useState([]);
+
     const rollDie = () => {
-        setDieResult(Math.ceil(Math.random() * dieMaxValue));
+        setDieIsRolling(true);
+        setDieResult(null);
+        setTemporaryDie(null);
+
+        const rollingInterval = setInterval(() => {
+            setTemporaryDie(Math.ceil(Math.random() * dieMaxValue));
+        }, 100)
+
+        setTimeout(() => {
+            clearInterval(rollingInterval);
+
+            const finalResult = (Math.ceil(Math.random() * dieMaxValue));
+            setDieResult(finalResult)
+
+            setDieIsRolling(false);
+            setDiceHistory((prev) => {
+                const updatedHistory = [finalResult, ...prev];
+                return updatedHistory.slice(0, 4);
+            })
+        }, 1000)
     }
 
     const changeDie = (chosenDie) => {
@@ -20,12 +46,19 @@ const DiceRoller = () => {
         <PageLayout>
             <RollingContainer>
                 <h2>Click to roll</h2>
-                <RollButton onClick={rollDie}>{dieResult}</RollButton>
+                <RollButton onClick={rollDie} disabled={dieIsRolling}>
+                    {dieIsRolling ? temporaryDie : dieResult }
+                </RollButton>
             </RollingContainer>
+            <div>
+                {diceHistory.map((value) => (
+                    <p key={value}>You rolled a {value} with the D{selectedDie}</p>
+                ))}
+            </div>
             <DiceContainer>
                 <h3>Change Die:</h3>
                 {[4, 6, 8, 10, 12, 20].map((die) => (
-                    <DieButton key={die} selected={selectedDie === die} onClick={() => {changeDie(die)}}>D{die}</DieButton>
+                    <DieButton key={die} selected={selectedDie === die} onClick={() => {changeDie(die)}} disabled={dieIsRolling}>D{die}</DieButton>
                 ))}
             </DiceContainer>
         </PageLayout>
