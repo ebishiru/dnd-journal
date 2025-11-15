@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 
 import styled from "styled-components";
 
@@ -85,6 +85,9 @@ const PageLayout = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: beige;
 `
 
 const RollingContainer = styled.div`
@@ -100,6 +103,7 @@ const DiceHistoryContainer = styled.div`
     border: 1px solid black;
     width: 350px;
     height: 6rem;
+    background-color: white;
 `
 
 const DiceContainer = styled.div`
