@@ -31,8 +31,12 @@ const DiceRoller = () => {
 
             setDieIsRolling(false);
             setDiceHistory((prev) => {
-                const updatedHistory = [finalResult, ...prev];
-                return updatedHistory.slice(0, 4);
+                const entry = {
+                    value: finalResult,
+                    die: dieMaxValue,
+                }
+                const updatedHistory = [entry, ...prev];
+                return updatedHistory.slice(0, 6);
             })
         }, 1000)
     }
@@ -45,22 +49,30 @@ const DiceRoller = () => {
     return (
         <PageLayout>
             <RollingContainer>
-                <h2>Click to roll</h2>
-                <RollButton onClick={rollDie} disabled={dieIsRolling}>
+                <h2>Tap the square to roll</h2>
+                <RollButton 
+                    onClick={rollDie} 
+                    disabled={dieIsRolling}
+                    rollValue={dieResult}
+                    maxValue={dieMaxValue}>
                     {dieIsRolling ? temporaryDie : dieResult }
                 </RollButton>
             </RollingContainer>
-            <div>
-                {diceHistory.map((value) => (
-                    <p key={value}>You rolled a {value} with the D{selectedDie}</p>
-                ))}
-            </div>
             <DiceContainer>
                 <h3>Change Die:</h3>
                 {[4, 6, 8, 10, 12, 20].map((die) => (
                     <DieButton key={die} selected={selectedDie === die} onClick={() => {changeDie(die)}} disabled={dieIsRolling}>D{die}</DieButton>
                 ))}
             </DiceContainer>
+            <DiceHistoryContainer>
+                {diceHistory.map((entry, index) => (
+                    <p key={index}>
+                        You rolled a {entry.value} with the D{entry.die}. 
+                        {entry.value === 1 && " (Lowest Roll!)"} 
+                        {entry.value === entry.die && " (Critical success!)"}
+                    </p>
+                ))}
+            </DiceHistoryContainer>
         </PageLayout>
         
     )
@@ -76,10 +88,23 @@ const PageLayout = styled.section`
 `
 
 const RollingContainer = styled.div`
-    margin: 5rem 0;
+    display: block;
+    margin: 2rem 0;
+`
+
+const DiceHistoryContainer = styled.div`
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0.25rem;
+    margin: 2rem 0;
+    border: 1px solid black;
+    width: 350px;
+    height: 6rem;
 `
 
 const DiceContainer = styled.div`
+    display: block;
+    margin: 2rem 0;
 `
 
 const RollButton = styled.button`
@@ -91,11 +116,18 @@ const RollButton = styled.button`
     border-radius: 5px;
     border: 3px solid black;
     cursor: pointer;
+
+    background-color: ${({rollValue, maxValue}) => {
+        if (rollValue === maxValue) return "gold";
+        return "white";
+    }};
 `
 
 const DieButton = styled.button`
-    padding: 0.25rem;
-    margin: 0.25rem;
+    font-size: 1rem;
+    width: 3rem;
+    height: 3rem;
+    margin: 0.5rem;
     border-radius: 5px;
     border: 1px solid black;
     background: ${(props) => (props.selected ? "green" : "white")};
