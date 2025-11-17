@@ -6,8 +6,7 @@ const Home = () => {
             <p>DND Journal</p>
             <p>Characters</p>
             <p>Campaigns</p>
-            <p>Login</p>
-            <p>Signup</p>
+            <p><Link to={"/login"}>Log In</Link></p>
             <p><Link to={"/diceroller"}>Dice Roller</Link></p>
         </>
     )
