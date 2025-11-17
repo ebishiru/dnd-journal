@@ -2,7 +2,14 @@ const express = require("express");
 require("dotenv").config();
 const { PORT } = process.env
 
+//Handlers
+const signUp = require("./handlers/signUp");
+const logIn = require("./handlers/logIn");
+
 const app = express();
+
+app.post("/signup", signUp);
+app.post("/login", logIn);
 
 //catch-all middleware
 app.use((req, res) => {
