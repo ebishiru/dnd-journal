@@ -7,7 +7,7 @@ const USERS_COLLECTION = "users";
 
 const logIn = async (req, res) => {
     const { username, password } = req.body;
-    const client = new MongoClient(MONGO+URI);
+    const client = new MongoClient(MONGO_URI);
 
     //Verify if username & password are provided
     if (!username || !password) {

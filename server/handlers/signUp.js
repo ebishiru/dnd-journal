@@ -22,7 +22,7 @@ const signUp = async (req, res) => {
         const db = client.db(DB);
 
         //Verify if username is unique
-        const existingUsername = await db.collection(USERS_COLLECTION.findOne({ username }));
+        const existingUsername = await db.collection(USERS_COLLECTION).findOne({ username });
         if (existingUsername) {
             return res.status(409).json({
                 status: 409,

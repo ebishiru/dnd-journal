@@ -6,10 +6,16 @@ const { PORT } = process.env
 const signUp = require("./handlers/signUp");
 const logIn = require("./handlers/logIn");
 
+const getCharacters = require("./handlers/getCharacters");
+
 const app = express();
+
+app.use(express.json());
 
 app.post("/signup", signUp);
 app.post("/login", logIn);
+
+app.get("/characters", getCharacters);
 
 //catch-all middleware
 app.use((req, res) => {
