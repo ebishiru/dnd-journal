@@ -32,5 +32,82 @@ Generic landing page. Tabs for character page, campaign page, and login.
 
 **2. Character Page**
 
-Self explanatory
+Lists all characters
 
+**2A. Individual character page**
+
+Shows their name, story, notable quotes and pictures.
+
+Author, created Date and edit date are also listed.
+
+**3. Campaign Page**
+
+Lists all campaigns
+
+**3A. Individual Campaign page**
+
+Shows title, summary, pictures and a prequel&sequel
+
+Author, created date and edit date are also shown too.
+
+**4. Dice Roller**
+
+Digital dice roller with all dice types and history log.
+
+
+
+## MongoDB Backend Collection:
+
+**user document**
+```
+{
+    _id: uuid v4 (UserId),
+    username: string,
+    passwprd: string,
+}
+```
+
+**character document**
+```
+{
+    _id: uuid v4 (HeroId),
+    author: UserId,
+    createdAt: Date,
+    lastEdit: Date,
+    name: string,
+    story: string,
+    quotes: string,
+    pictures: string,
+}
+```
+
+**campaign document**
+```
+{
+    _id: uuid v4 (CampaignId),
+    author: UserId,
+    createdAt: Date,
+    lastEdit: Date,
+    title: string,
+    story: string,
+    pictures: string,
+    prequelCampaign: CampaignId,
+    sequelCampaign: CampaignId,
+}
+```
+
+## Backend operations:
+```
+- Post user (signup)
+- Get user (login)
+
+- Create character
+- Get character
+- Update character (Edit character)
+- Delete character
+
+- Create campaign
+- Get campaign
+- Update campaign (Edit campaign) 
+- Delete campaign
+```
