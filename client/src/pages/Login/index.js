@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 
+import styled from "styled-components";
+
 const Login = () => {
     const [ status, setStatus ] = useState("idle");
     const [ inputUsername, setInputUsername ] = useState("");
@@ -28,7 +30,22 @@ const Login = () => {
             },
             body
         }
-        //try fetch & catch
+        try {
+            const response = await fetch("/login", options);
+            const data = await response.json();
+            if (data.status !=200) {
+                setStatus("idle");
+                setErrorMessage(data.message);
+            } else {
+                setStatus("idle");
+                setInputUsername("");
+                setInputPassword("");
+                console.log(data.message);
+            }
+        } catch (error) {
+            setStatus("idle");
+            setErrorMessage(error.message);
+        }
     }
 
     const handleSignUp = async (ev) => {
@@ -56,12 +73,28 @@ const Login = () => {
             },
             body
         }
-        //try fetch & catch
+        try {
+            const response = await fetch("/signup", options);
+            const data = await response.json();
+            if (data.status !=200) {
+                setStatus("idle");
+                setErrorSignMessage(data.message);
+            } else {
+                setStatus("idle");
+                setInputSignUsername("");
+                setInputPassword("");
+                setInputConfirmPassword("");
+                console.log(data.message);
+            }
+        } catch (error) {
+            setStatus("idle");
+            setErrorSignMessage(error.message);
+        }
     }
 
     return (
-        <>
-            <div>
+        <PageLayout>
+            <LogInContainer>
                 <form onSubmit={handleLogIn} autoComplete="on">
                     <h2>Already have an account? Log in here!</h2>
                     <label htmlFor="username">Username:</label>
@@ -71,8 +104,8 @@ const Login = () => {
                     <button type="submit" disabled={!inputUsername || !inputPassword || status === "logging"}>Sign In</button>
                     <p>{errorMessage || ""}</p>
                 </form>
-            </div>
-            <div>
+            </LogInContainer>
+            <SignUpContainer>
                 <form onSubmit={handleSignUp}>
                     <h2>Don't have an account? Sign up now!</h2>
                     <label htmlFor="signUsername">Username:</label>
@@ -84,9 +117,33 @@ const Login = () => {
                     <button type="submit" disabled={!inputSignUsername || !inputSignPassword || !inputConfirmPassword || status === "logging"}>Sign Up</button>
                     <p>{errorSignMessage || ""}</p>
                 </form>
-            </div>
-        </>
+            </SignUpContainer>
+        </PageLayout>
     )
 }
 
 export default Login;
+
+const PageLayout = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: beige;
+`
+const LogInContainer = styled.div`
+    display: block;
+    margin: 2rem 0 ;
+    padding: 0.5rem;
+    border: 1px solid black;
+    
+`
+
+const SignUpContainer = styled.div`
+    display: block;
+    margin: 2rem 0 ;
+    padding: 0.5rem;
+    border: 1px solid black;
+`
