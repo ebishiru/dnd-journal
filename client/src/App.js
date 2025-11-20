@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import DiceRoller from "./pages/DiceRoller";
-import Profile from "./pages/Profile";
+import Home from "./Pages/Home";
+import Login from "./Pages/Login";
+import DiceRoller from "./Pages/DiceRoller";
+import Profile from "./Pages/Profile";
 
 const App = () => {
 

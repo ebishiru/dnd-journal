@@ -1,8 +1,14 @@
 import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
 import styled from "styled-components";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
+
     const [ status, setStatus ] = useState("idle");
     const [ inputUsername, setInputUsername ] = useState("");
     const [ inputPassword, setInputPassword ] = useState("");
@@ -12,6 +18,12 @@ const Login = () => {
     const [ inputSignPassword, setInputSignPassword ] = useState("");
     const [ inputConfirmPassword, setInputConfirmPassword ] = useState("");
     const [ errorSignMessage, setErrorSignMessage ] = useState(null);
+
+    useEffect(() => {
+        if (currentUser) {
+            navigate("/");
+        }
+    }, [currentUser, navigate])
 
     const handleLogIn = async (ev) => {
         ev.preventDefault();
@@ -38,6 +50,7 @@ const Login = () => {
                 setErrorMessage(data.message);
             } else {
                 setStatus("idle");
+                setCurrentUser(data)
                 setInputUsername("");
                 setInputPassword("");
                 console.log(data.message);
