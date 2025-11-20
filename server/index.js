@@ -7,6 +7,7 @@ const signUp = require("./handlers/signUp");
 const logIn = require("./handlers/logIn");
 
 const getCharacters = require("./handlers/getCharacters");
+const createCharacter = require("./handlers/createCharacter");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.post("/signup", signUp);
 app.post("/login", logIn);
 
 app.get("/characters", getCharacters);
+app.post("/createCharacter", createCharacter);
 
 //catch-all middleware
 app.use((req, res) => {
