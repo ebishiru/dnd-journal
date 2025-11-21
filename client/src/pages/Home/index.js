@@ -12,13 +12,13 @@ const Home = () => {
     return (
         <>
             <h2>DND Journal</h2>
-            <button>Browse Characters</button>
-            <button>Browse Campaigns</button>
-            <button><Link to={"/diceroller"}>Dice Roller</Link></button>
+            <Link to={"/characters"}><button>Browse Characters</button></Link>
+            <Link to={"/campaigns"}><button>Browse Campaigns</button></Link>
+            <Link to={"/diceroller"}><button>Dice Roller</button></Link>
             {
-                !currentUser? <button><Link to={"/login"}>Log In</Link></button> 
+                !currentUser? <Link to={"/login"}><button>Log In</button></Link>
                 : <>
-                    <button>Edit Info</button>
+                    <Link to={"/manage"}><button>Manage Info</button></Link>
                     <button onClick={handleLogOut}>Log Out</button>
                 </>
             }

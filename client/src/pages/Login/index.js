@@ -50,7 +50,7 @@ const Login = () => {
                 setErrorMessage(data.message);
             } else {
                 setStatus("idle");
-                setCurrentUser(data)
+                setCurrentUser(data.data)
                 setInputUsername("");
                 setInputPassword("");
                 console.log(data.message);
