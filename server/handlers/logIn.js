@@ -17,12 +17,15 @@ const logIn = async (req, res) => {
         })
     }
 
+    //Put username to lowercase
+    const normalizedUsername = username.toLowerCase();
+
     try {
         await client.connect();
         const db = client.db(DB);
 
         //Verify user with username exists
-        const existingUsername = await db.collection(USERS_COLLECTION).findOne({ username });
+        const existingUsername = await db.collection(USERS_COLLECTION).findOne({ username: normalizedUsername });
         if (!existingUsername) {
             return res.status(404).json({
                 status: 404,
@@ -42,7 +45,7 @@ const logIn = async (req, res) => {
         res.status(200).json({
             status: 200,
             message: "Successfully logged in.",
-            data: existingUsername.username
+            data: normalizedUsername
         });
 
     } catch (error) {

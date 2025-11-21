@@ -17,12 +17,16 @@ const signUp = async (req, res) => {
             message: "Please provide an username and password."
         })
     }
+
+    //convert username to lowercase
+    const normalizedUsername = username.toLowerCase();
+
     try {
         await client.connect();
         const db = client.db(DB);
 
         //Verify if username is unique
-        const existingUsername = await db.collection(USERS_COLLECTION).findOne({ username });
+        const existingUsername = await db.collection(USERS_COLLECTION).findOne({ username: normalizedUsername });
         if (existingUsername) {
             return res.status(409).json({
                 status: 409,
@@ -33,7 +37,7 @@ const signUp = async (req, res) => {
         //Create new user
         const newUser = {
             _id: uuidv4(),
-            username,
+            username: normalizedUsername,
             password,
         };
         const result = await db.collection(USERS_COLLECTION).insertOne(newUser);
@@ -50,7 +54,7 @@ const signUp = async (req, res) => {
         res.status(201).json({
             status: 201,
             message: "User successfully created.",
-            data: username,
+            data: normalizedUsername,
         })
 
     } catch (error) {

@@ -31,7 +31,6 @@ const createCharacter = async (req, res) => {
             name: characterName,
             story: null,
             quotes: null,
-            pictures: null
         }
         const result = await db.collection(CHARACTERS_COLLECTION).insertOne(newCharacter);
 

@@ -1,7 +1,7 @@
 
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const ManageInfo = () => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const ManageInfo = () => {
     return (
         <>
             <h2>Welcome {currentUser}</h2>
-            <button>Create New Character</button>
+            <Link to={"/manage/character/new"}><button>Create New Character</button></Link>
             <button>Manage Existing Character</button>
             <button>Create New Campaign</button>
             <button>Manage Existing Campaign</button>
