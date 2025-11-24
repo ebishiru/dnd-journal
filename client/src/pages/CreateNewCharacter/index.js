@@ -12,10 +12,23 @@ const CreateNewCharacter = () => {
     const [ status, setStatus ] = useState("idle");
     const [ inputCharacterName, setInputCharacterName ] = useState("");
     const [ inputCharacterStory, setInputCharacterStory ] = useState("");
-    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([]);
+    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([""]);
+    const [ errorMessage, setErrorMessage ] = useState(null);
 
     const handleAddQuoteInput = () => {
+        if (inputCharacterQuotes.length >= 8) {
+            setErrorMessage("Maximum quotes alloted.");
+            return;
+        }
         setInputCharacterQuotes([...inputCharacterQuotes, ""]);
+    }
+
+    const handleRemoveQuoteInput = () => {
+        if (inputCharacterQuotes.length <= 1) {
+            setErrorMessage("Cannot further reduce number of quotes.")
+            return;
+        }
+        setInputCharacterQuotes(inputCharacterQuotes.slice(0,-1));
     }
 
     const handleInputCharacterQuoteChange = (index, newValue) => {
@@ -36,15 +49,20 @@ const CreateNewCharacter = () => {
                 <input type="text" id="characterName" value={inputCharacterName} onChange={(ev)=>{setInputCharacterName(ev.target.value)}}></input>
                 <label htmlFor="characterStory">Story:</label>
                 <textarea id="characterStory" value={inputCharacterStory} onChange={(ev)=>{setInputCharacterStory(ev.target.value)}}></textarea>
+
                 {
-                    inputCharacterQuotes.map((inputCharacterQuotes, i) => {
-                        <div key={i}>
-                            <label>Quote {i+1}:</label>
-                            <input type="text" value={inputCharacterQuotes.value} onChange={(ev) => handleInputCharacterQuoteChange(i, ev.target.value)} />
-                        </div>
+                    inputCharacterQuotes.map((inputCharacterQuote, index) => {
+                        return (
+                            <div key={index}>
+                            <label htmlFor={`inputCharacterQuote${index + 1}`}>Quote {index+1}:</label>
+                            <input type="text" id={`inputCharacterQuote${index + 1}`} value={inputCharacterQuote} onChange={(ev) => handleInputCharacterQuoteChange(index, ev.target.value)} />
+                            </div>
+                        )
+                        
                     })
                 }
                 <button type="button" onClick={handleAddQuoteInput}>Add more quotes</button>
+                <button type="button" onClick={handleRemoveQuoteInput}>Remove last quote</button>
                 <button type="submit">Create Character</button>
                 <p>{errorMessage}</p>
             </form>
