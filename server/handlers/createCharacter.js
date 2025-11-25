@@ -7,11 +7,21 @@ const DB = "dndJournal";
 const CHARACTERS_COLLECTION = "characters";
 
 const createCharacter = async (req, res) => {
-    const { author, characterName } = req.body;
+    const { author, name, story, quotes } = req.body;
     const client = new MongoClient(MONGO_URI);
     const date = new Date();
 
-    if (!characterName) {
+    //format date to be DD/MM/YY
+    const formatDate = (date) => {
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        return `${day < 10? "0" + day : day}/${month < 10? "0" + month : month}/${year}`;
+    }
+    const formattedDate = formatDate(date);
+
+    if (!name) {
         return res.status(400).json({
             status: 400,
             message: "Missing Character Name"
@@ -26,11 +36,11 @@ const createCharacter = async (req, res) => {
         const newCharacter = {
             _id: uuidv4(),
             author,
-            createdAt: date,
-            lastEdit: date,
-            name: characterName,
-            story: null,
-            quotes: null,
+            createdAt: formattedDate,
+            lastEdit: formattedDate,
+            name,
+            story: story || "",
+            quotes: quotes || []
         }
         const result = await db.collection(CHARACTERS_COLLECTION).insertOne(newCharacter);
 

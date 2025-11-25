@@ -15,6 +15,13 @@ const CreateNewCharacter = () => {
     const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([""]);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
+    //ensure user is logged in
+    useEffect(() => {
+        if (!currentUser) {
+            navigate("/");
+        }
+    }, [currentUser, navigate])
+
     const handleAddQuoteInput = () => {
         if (inputCharacterQuotes.length >= 8) {
             setErrorMessage("Maximum quotes alloted.");
@@ -39,8 +46,41 @@ const CreateNewCharacter = () => {
 
     const handleCreateCharacter = async (ev) => {
         ev.preventDefault();
+        setStatus("processing");
+        setErrorMessage(null);
+        const createCharacterData = {
+            author: currentUser,
+            name: inputCharacterName,
+            story: inputCharacterStory,
+            quotes: inputCharacterQuotes
+        }
+        const body = JSON.stringify( createCharacterData );
+        const options = {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body
+        }
+        try {
+            const response = await fetch("/createCharacter", options);
+            const data = await response.json();
+            if (data.status !== 201) {
+                setStatus("idle");
+                setErrorMessage(data.message);
+            } else {
+                setStatus("idle");
+                console.log(data.message);
+            }
+        } catch (error) {
+            setStatus("idle");
+            setErrorMessage(error.message);
+        }
     }
 
+
+    
     return (
         <>
             <h2>Create a new Character:</h2>
