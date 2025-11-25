@@ -19,7 +19,7 @@ const ManageInfo = () => {
         <>
             <h2>Welcome {currentUser}</h2>
             <Link to={"/manage/character/new"}><button>Create New Character</button></Link>
-            <button>Manage Existing Character</button>
+            <Link to={"/manage/characters"}><button>Manage Existing Character</button></Link>
             <button>Create New Campaign</button>
             <button>Manage Existing Campaign</button>
         </>
