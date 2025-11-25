@@ -27,7 +27,46 @@ const editCharacter = async (req, res) => {
     const query = { _id };
     const edittedValues = {
         $set: {
-
+            name,
+            story,
+            quotes,
+            lastEdit: formatDate()
         }
     }
+
+    try {
+        await client.connect();
+        const db = client.db(DB);
+        //Verify character _id exists
+        const foundCharacter = await db.collection(CHARACTERS_COLLECTION).findOne({ _id });
+        if (!foundCharacter) {
+            return res.status(404).json({
+                status: 404,
+                message: "Character could not be found."
+            })
+        }
+
+        //Update character info
+        const result = await db.collection(CHARACTERS_COLLECTION).updateOne(query, edittedValues);
+        if (result.modifiedCount === 0) {
+            return res.status(400).json({
+                status: 400,
+                message: "Character could not be updated."
+            })
+        }
+        // Confirm update success
+        res.status(202).json({
+            status: 202,
+            message: "Character successfully updated."
+        })
+    } catch (error) {
+        res.status(502).json({
+            status: 502,
+            message: error.message
+        })
+    } finally {
+        await client.close();
+    }
 }
+
+module.exports = editCharacter;

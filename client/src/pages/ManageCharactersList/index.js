@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
@@ -37,7 +37,7 @@ const ManageCharactersList = () => {
 
         fetchCharacters();
 
-    },[])
+    },[currentUser])
 
     if (!allUserCharacters) {
         return (
@@ -49,12 +49,14 @@ const ManageCharactersList = () => {
         <>
             <p>Manage characters list.</p>
             {
-                allUserCharacters.map((character, index) => {
+                allUserCharacters.map((character) => {
                     return (
-                        <div key={index}>
-                            <span>{character.name}</span>
-                            <span>{character.createdAt}</span>
-                        </div>
+                        <Link to={`/manage/character/${character._id}`} key={character._id}>
+                            <div>
+                                <span>{character.name}</span>
+                                <span>{character.createdAt}</span>
+                            </div>
+                        </Link>
                     )
                     
                 })
