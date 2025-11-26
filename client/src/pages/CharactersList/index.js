@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -34,13 +35,15 @@ const CharactersList = () => {
         <>
             <p>Characters List:</p>
             {
-                allCharacters.map((character, index) => {
+                allCharacters.map((character) => {
                     return (
-                        <div key={index}>
-                            <span>{character.name}</span>
-                            <span>Written by:{character.author}</span>
-                            <span>Creation Date:{character.createdAt}</span>
-                        </div>
+                        <Link to={`/character/${character._id}`} key={character._id}>
+                            <div>
+                                <span>{character.name}</span>
+                                <span>Written by:{character.author}</span>
+                                <span>Creation Date:{character.createdAt}</span>
+                            </div>
+                        </Link>
                     )
                 })
             }
