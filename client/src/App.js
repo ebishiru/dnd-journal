@@ -20,7 +20,7 @@ const App = () => {
                 <Route path="/manage" element={<ManageInfo />} />
                 <Route path="/manage/character/new" element={<CreateNewCharacter />} />
                 <Route path="/manage/characters" element={<ManageCharactersList />} />
-                <Route path="/manage/character/:charId" element={<ManageCharacter />} />
+                <Route path="/manage/character/:_id" element={<ManageCharacter />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/diceroller" element={<DiceRoller />} />
             </Routes>

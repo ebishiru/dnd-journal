@@ -7,6 +7,7 @@ const signUp = require("./handlers/signUp");
 const logIn = require("./handlers/logIn");
 
 const getCharacters = require("./handlers/getCharacters");
+const getCharacter = require("./handlers/getCharacter");
 const createCharacter = require("./handlers/createCharacter");
 const editCharacter = require("./handlers/editCharacter");
 
@@ -18,8 +19,9 @@ app.post("/signup", signUp);
 app.post("/login", logIn);
 
 app.get("/characters", getCharacters);
+app.get("/character/:_id", getCharacter);
 app.post("/createCharacter", createCharacter);
-app.post("/editCharacter", editCharacter);
+app.patch("/editCharacter", editCharacter);
 
 //catch-all middleware
 app.use((req, res) => {
