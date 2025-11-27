@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import Header from "./Components/Header";
 import Home from "./Pages/Home";
 import CharactersList from "./Pages/CharactersList";
 import CharacterPage from "./Pages/CharacterPage";
@@ -14,6 +15,7 @@ const App = () => {
 
     return (
         <Router>
+            <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/characters" element={<CharactersList />} />

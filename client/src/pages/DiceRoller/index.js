@@ -85,9 +85,6 @@ const PageLayout = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: beige;
 `
 
 const RollingContainer = styled.div`
@@ -100,10 +97,10 @@ const DiceHistoryContainer = styled.div`
     flex-direction: column-reverse;
     padding: 0.25rem;
     margin: 2rem 0;
-    border: 1px solid black;
+    border: 0.1rem solid #2E2B2B;
     width: 350px;
     height: 6rem;
-    background-color: white;
+    background-color: #FAF3E0;
 `
 
 const DiceContainer = styled.div`
@@ -112,30 +109,30 @@ const DiceContainer = styled.div`
 `
 
 const RollButton = styled.button`
-    font-size: 3rem;
+    font-size: 3.5rem;
     width: 180px;
     height: 180px;
     padding: 3.5rem;
     margin: 1rem;
     border-radius: 5px;
-    border: 3px solid black;
+    border: 3px solid #2E2B2B;
     cursor: pointer;
 
     background-color: ${({rollValue, maxValue}) => {
-        if (rollValue === maxValue) return "gold";
+        if (rollValue === maxValue) return "#D4AF37";
         return "white";
     }};
 `
 
 const DieButton = styled.button`
-    font-size: 1rem;
+    font-size: 1.2rem;
     width: 3rem;
     height: 3rem;
     margin: 0.5rem;
     border-radius: 5px;
-    border: 1px solid black;
-    background: ${(props) => (props.selected ? "green" : "white")};
-    color: ${(props) => (props.selected ? "white" : "black")};
+    border: 0.1rem solid #2E2B2B;
+    background: ${(props) => (props.selected ? "#6C3483" : "white")};
+    color: ${(props) => (props.selected ? "white" : "#2E2B2B")};
     cursor: pointer;
     transition: 0.2s;
 `
