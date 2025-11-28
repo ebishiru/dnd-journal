@@ -33,17 +33,20 @@ const CharactersList = () => {
 
     return (
         <>
-            <p>Characters List:</p>
+            <HeaderRow>
+                <span>Character</span>
+                <span>Author</span>
+                <span>Created</span>
+            </HeaderRow>
             {
                 allCharacters.map((character) => {
                     return (
-                        <Link to={`/character/${character._id}`} key={character._id}>
-                            <div>
-                                <span>{character.name}</span>
-                                <span>Written by:{character.author}</span>
-                                <span>Creation Date:{character.createdAt}</span>
-                            </div>
-                        </Link>
+                            <CharacterRow>
+                                <span><Link to={`/character/${character._id}`} key={character._id} className="nameLink">{character.name}</Link></span>
+                                <p>{character.author}</p>
+                                <p>{character.createdAt}</p>
+                            </CharacterRow>
+                        
                     )
                 })
             }
@@ -52,3 +55,33 @@ const CharactersList = () => {
 }
 
 export default CharactersList;
+
+const HeaderRow = styled.div`
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+    border: 0.1rem solid #2E2B2B;
+    font-weight: bold;
+    background-color: #A68B6E;
+`
+
+const CharacterRow = styled.div`
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 0.1rem dashed #2E2B2B;
+    &:hover {
+        background-color: #A68B6E;
+    }
+    span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+    .nameLink {
+        color: #6C3483;
+        font-weight: bold;
+    }
+`

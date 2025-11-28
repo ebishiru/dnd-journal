@@ -88,6 +88,7 @@ const DataContainer = styled.div`
     }
 `
 const StoryContainer = styled.div`
+    line-height: 1.5;
     margin: 0.5rem;
     padding: 0.5rem;
     border: 0.15rem dashed #A68B6E;
@@ -106,5 +107,8 @@ const QuoteContainer = styled.div`
         font-style: normal;
         font-weight: bold;
         padding-bottom: 0.5rem;
+    }
+    p {
+        padding-bottom: 0.25rem;
     }
 `

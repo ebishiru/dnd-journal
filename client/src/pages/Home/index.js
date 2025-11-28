@@ -51,6 +51,7 @@ const ButtonsContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 3.5rem;
     button {
         background-color: #A68B6E;
         color: #1C1C1C;
