@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
+import styled from "styled-components";
+
 const ManageCharacter = () => {
     const navigate = useNavigate();
     const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);

@@ -83,28 +83,35 @@ const CreateNewCharacter = () => {
     
     return (
         <>
-            <h2>Create a new Character:</h2>
             <form onSubmit={handleCreateCharacter}>
-                <label htmlFor="characterName">Character Name:</label>
-                <input type="text" id="characterName" value={inputCharacterName} onChange={(ev)=>{setInputCharacterName(ev.target.value)}}></input>
+                <p>"Summon forth a new character to step into the tale..."</p>
+                <div>
+                    <label htmlFor="characterName">Name:</label>
+                    <input type="text" id="characterName" value={inputCharacterName} onChange={(ev)=>{setInputCharacterName(ev.target.value)}}></input>
+                </div>
+                <p>“The shadows stir with curiosity… reveal a bit more about who you truly are.”</p>
                 <label htmlFor="characterStory">Story:</label>
                 <textarea id="characterStory" value={inputCharacterStory} onChange={(ev)=>{setInputCharacterStory(ev.target.value)}}></textarea>
-
-                {
-                    inputCharacterQuotes.map((inputCharacterQuote, index) => {
-                        return (
-                            <div key={index}>
-                            <label htmlFor={`inputCharacterQuote${index + 1}`}>Quote {index+1}:</label>
-                            <input type="text" id={`inputCharacterQuote${index + 1}`} value={inputCharacterQuote} onChange={(ev) => handleInputCharacterQuoteChange(index, ev.target.value)} />
-                            </div>
-                        )
-                        
-                    })
-                }
-                <button type="button" onClick={handleAddQuoteInput}>Add more quotes</button>
-                <button type="button" onClick={handleRemoveQuoteInput}>Remove last quote</button>
-                <button type="submit">Create Character</button>
-                <p>{errorMessage}</p>
+                <div>
+                    {
+                        inputCharacterQuotes.map((inputCharacterQuote, index) => {
+                            return (
+                                <div key={index}>
+                                <label htmlFor={`inputCharacterQuote${index + 1}`}>Quote {index+1}:</label>
+                                <input type="text" id={`inputCharacterQuote${index + 1}`} value={inputCharacterQuote} onChange={(ev) => handleInputCharacterQuoteChange(index, ev.target.value)} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div>
+                    <button type="button" onClick={handleAddQuoteInput}>Add more quotes</button>
+                    <button type="button" onClick={handleRemoveQuoteInput}>Remove last quote</button>
+                </div>
+                <div>
+                    <button type="submit">Create Character</button>
+                    <p>{errorMessage}</p>
+                </div>
             </form>
         </>
     )

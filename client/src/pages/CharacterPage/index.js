@@ -93,6 +93,9 @@ const StoryContainer = styled.div`
     padding: 0.5rem;
     border: 0.15rem dashed #A68B6E;
     color: #1C1C1C;
+    p {
+        white-space: pre-wrap;
+    }
 `
 const QuoteContainer = styled.div`
     text-align: center;
