@@ -109,7 +109,7 @@ const Login = () => {
         <PageLayout>
             <LogInContainer>
                 <FormSection onSubmit={handleLogIn} autoComplete="on">
-                    <h2>Already have an account? Log in here!</h2>
+                    <p className="title">Already have an account? <br /><span>Log in here!</span></p>
                     <div className="formRow">
                         <label htmlFor="username">Username:</label>
                         <input type="text" id="username" value={inputUsername} onChange={(ev)=>{setInputUsername(ev.target.value)}}></input>
@@ -126,7 +126,7 @@ const Login = () => {
             </LogInContainer>
             <SignUpContainer>
                 <FormSection onSubmit={handleSignUp}>
-                    <h2>Don't have an account? Sign up now!</h2>
+                    <p className="title">Don't have an account? <br /><span>Sign up now!</span></p>
                     <div className="formRow">
                         <label htmlFor="signUsername">Username:</label>
                         <input type="text" id="signUsername" value={inputSignUsername} onChange={(ev)=>{setInputSignUsername(ev.target.value)}}></input>
@@ -142,7 +142,7 @@ const Login = () => {
                     <div className="buttonRow">
                         <button type="submit" disabled={!inputSignUsername || !inputSignPassword || !inputConfirmPassword || status === "logging"}>Sign Up</button>
                     </div>
-                    <p>{errorSignMessage || ""}</p>
+                    <p className="errorMessage">{errorSignMessage || ""}</p>
                 </FormSection>
             </SignUpContainer>
         </PageLayout>
@@ -162,6 +162,7 @@ const LogInContainer = styled.div`
     display: block;
     margin: 2rem 0 ;
     padding: 1rem;
+    padding-bottom: 0.5rem;
     border: 0.15rem solid #2E2B2B;
     min-width: 320px;
 `
@@ -170,20 +171,26 @@ const SignUpContainer = styled.div`
     display: block;
     margin: 2rem 0 ;
     padding: 1rem;
+    padding-bottom: 0.5rem;
     border: 0.15rem solid #2E2B2B;
     min-width: 320px;
 `
 const FormSection = styled.form`
-    h2 {
-        font-size: 1.25rem;
+    font-size: 1.25rem;
+    .title {
+        font-size: 1.5rem;
         font-weight: bold;
         padding: 0.5rem 0;
+        margin: 0.5rem 0;
+        span {
+            color: #C0392B;
+        }
     }
     .formRow {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
     }
     .formRow label {
         margin-right: 0.5rem;
@@ -199,10 +206,21 @@ const FormSection = styled.form`
         margin-top: 0.5rem;
     }
     button {
-        /* background-color: #A68B6E;
-        color: #FAF3E0; */
+        font-size: 1.25rem;
+        background-color: #A68B6E;
+        color: #1C1C1C;
+        border: 0.15rem solid #2E2B2B;
+        opacity: 25%;
+    }
+    button:enabled {
+        opacity: 100%;
+        cursor: pointer;
+    }
+    button:active {
+        transform: scale(0.9);
     }
     .errorMessage {
         color: #C0392B;
+        padding-top: 0.5rem;
     }
 `

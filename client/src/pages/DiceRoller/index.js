@@ -49,7 +49,7 @@ const DiceRoller = () => {
     return (
         <PageLayout>
             <RollingContainer>
-                <h2>Tap the square to roll</h2>
+                <p>Tap the square to test your luck.</p>
                 <RollButton 
                     onClick={rollDie} 
                     disabled={dieIsRolling}
@@ -59,7 +59,7 @@ const DiceRoller = () => {
                 </RollButton>
             </RollingContainer>
             <DiceContainer>
-                <h3>Change Die:</h3>
+                <p>Change your fate. Choose your die.</p>
                 {[4, 6, 8, 10, 12, 20].map((die) => (
                     <DieButton key={die} selected={selectedDie === die} onClick={() => {changeDie(die)}} disabled={dieIsRolling}>D{die}</DieButton>
                 ))}
@@ -81,33 +81,17 @@ const DiceRoller = () => {
 export default DiceRoller;
 
 const PageLayout = styled.section`
+    p {
+        font-size: 1.25rem;
+    }
+`
+const RollingContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`
-
-const RollingContainer = styled.div`
-    display: block;
     margin: 2rem 0;
 `
-
-const DiceHistoryContainer = styled.div`
-    display: flex;
-    flex-direction: column-reverse;
-    padding: 0.25rem;
-    margin: 2rem 0;
-    border: 0.1rem solid #2E2B2B;
-    width: 350px;
-    height: 6rem;
-    background-color: #FAF3E0;
-`
-
-const DiceContainer = styled.div`
-    display: block;
-    margin: 2rem 0;
-`
-
 const RollButton = styled.button`
     font-size: 3.5rem;
     width: 180px;
@@ -117,22 +101,36 @@ const RollButton = styled.button`
     border-radius: 5px;
     border: 3px solid #2E2B2B;
     cursor: pointer;
-
     background-color: ${({rollValue, maxValue}) => {
         if (rollValue === maxValue) return "#D4AF37";
         return "white";
     }};
 `
-
+const DiceContainer = styled.div`
+    text-align: center;
+    margin: 2rem 0;
+`
 const DieButton = styled.button`
     font-size: 1.2rem;
     width: 3rem;
     height: 3rem;
-    margin: 0.5rem;
+    margin: 1rem 0.5rem;
     border-radius: 5px;
     border: 0.1rem solid #2E2B2B;
-    background: ${(props) => (props.selected ? "#6C3483" : "white")};
+    background: ${(props) => (props.selected ? "#C0392B" : "white")};
     color: ${(props) => (props.selected ? "white" : "#2E2B2B")};
     cursor: pointer;
     transition: 0.2s;
+`
+const DiceHistoryContainer = styled.div`
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0.25rem;
+    margin: 2rem;
+    border: 0.2rem solid #2E2B2B;
+    height: 6rem;
+    background-color: #A68B6E;
+    p {
+        font-size: 1rem;
+    }
 `

@@ -30,11 +30,11 @@ const HeaderContainer = styled.div`
     text-align: center;
     width: 100%;
     position: relative;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
 `
 
 const TitleText = styled.p`
-    font-size: ${(props) => (props.isHome ? "x-large" : "medium")};
+    font-size: ${(props) => (props.isHome ? "1.6rem" : "1.3rem")};
     font-weight: bold;
 `
 
