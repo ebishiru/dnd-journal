@@ -48,15 +48,19 @@ const ManageCharactersList = () => {
     return (
         <>
             <p>Manage characters list.</p>
+            <HeaderRow>
+                <span>Character</span>
+                <span>Author</span>
+                <span>Created</span>
+            </HeaderRow>
             {
                 allUserCharacters.map((character) => {
                     return (
-                        <Link to={`/manage/character/${character._id}`} key={character._id}>
-                            <div>
-                                <span>{character.name}</span>
-                                <span>{character.createdAt}</span>
-                            </div>
-                        </Link>
+                        <CharacterRow>
+                            <span><Link to={`/manage/character/${character._id}`} key={character._id} className="nameLink">{character.name}</Link></span>
+                            <p>{character.author}</p>
+                            <p>{character.createdAt}</p>
+                        </CharacterRow>
                     )
                     
                 })
@@ -66,3 +70,32 @@ const ManageCharactersList = () => {
 }
 
 export default ManageCharactersList;
+
+const HeaderRow = styled.div`
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+    border: 0.1rem solid #2E2B2B;
+    font-weight: bold;
+    background-color: #A68B6E;
+`
+const CharacterRow = styled.div`
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-bottom: 0.1rem dashed #2E2B2B;
+    &:hover {
+        background-color: #A68B6E;
+    }
+    span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+    .nameLink {
+        color: #6C3483;
+        font-weight: bold;
+    }
+`

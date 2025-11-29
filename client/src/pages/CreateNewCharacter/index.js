@@ -78,6 +78,7 @@ const CreateNewCharacter = () => {
             } else {
                 setStatus("idle");
                 console.log(data.message);
+                navigate("/manage")
             }
         } catch (error) {
             setStatus("idle");
@@ -117,9 +118,9 @@ const CreateNewCharacter = () => {
                     <button type="button" onClick={handleAddQuoteInput} disabled={inputCharacterQuotes.length >= 8}>Add more quotes</button>
                     <button type="button" onClick={handleRemoveQuoteInput} disabled={inputCharacterQuotes.length <= 1}>Remove last quote</button>
                 </div>
-                <div>
+                <div className="submitSection">
                     <button type="submit">Create Character</button>
-                    <p>{errorMessage}</p>
+                    <p className="errorMessage">{errorMessage}</p>
                 </div>
             </FormSection>
         </>
@@ -179,12 +180,17 @@ const FormSection = styled.form`
             box-sizing: border-box;
         }
     }
+    button {
+        background-color: #A68B6E;
+        color: #1C1C1C;
+        border: 0.15rem solid #2E2B2B;
+    }
+    button:active {
+        transform: scale(0.9);
+    }
     .buttonSection {
         button {
             font-size: 1rem;
-            background-color: #A68B6E;
-            color: #1C1C1C;
-            border: 0.15rem solid #2E2B2B;
             margin: 0 0.5rem;
             opacity: 25%;
         }
@@ -192,8 +198,14 @@ const FormSection = styled.form`
             opacity: 100%;
             cursor: pointer;
         }
-        button:active {
-            transform: scale(0.9);
+    }
+    .submitSection {
+        button {
+            font-size: 1.5rem;
+            margin: 1rem;
+        }
+        .errorMessage {
+            color: #C0392B;
         }
     }
 `
