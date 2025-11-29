@@ -22,6 +22,12 @@ const CreateNewCharacter = () => {
         }
     }, [currentUser, navigate])
 
+    //ensure textarea grows with content
+    const autoGrow = (element) => {
+        element.style.height = "auto";
+        element.style.height = element.scrollHeight + "px";
+    }
+
     const handleAddQuoteInput = () => {
         if (inputCharacterQuotes.length >= 8) {
             setErrorMessage("Maximum quotes alloted.");
@@ -83,38 +89,111 @@ const CreateNewCharacter = () => {
     
     return (
         <>
-            <form onSubmit={handleCreateCharacter}>
-                <p>"Summon forth a new character to step into the tale..."</p>
-                <div>
+            <FormSection onSubmit={handleCreateCharacter}>
+                <p>“Summon forth a new character to step into the tale...”</p>
+                <div className="nameRow">
                     <label htmlFor="characterName">Name:</label>
                     <input type="text" id="characterName" value={inputCharacterName} onChange={(ev)=>{setInputCharacterName(ev.target.value)}}></input>
                 </div>
-                <p>“The shadows stir with curiosity… reveal a bit more about who you truly are.”</p>
-                <label htmlFor="characterStory">Story:</label>
-                <textarea id="characterStory" value={inputCharacterStory} onChange={(ev)=>{setInputCharacterStory(ev.target.value)}}></textarea>
+                <div className="storySection">
+                    <p>“The shadows stir with curiosity… reveal a bit more about who you truly are.”</p>
+                    <label htmlFor="characterStory">-- Back story --</label>
+                    <textarea id="characterStory" value={inputCharacterStory} onChange={(ev)=>{setInputCharacterStory(ev.target.value); autoGrow(ev.target);}}></textarea>
+                </div>
+                <p>“Words worthy of a bard’s retelling…”</p>
                 <div>
                     {
                         inputCharacterQuotes.map((inputCharacterQuote, index) => {
                             return (
-                                <div key={index}>
-                                <label htmlFor={`inputCharacterQuote${index + 1}`}>Quote {index+1}:</label>
+                                <div key={index} className="quoteRow">
+                                <label htmlFor={`inputCharacterQuote${index + 1}`}>{index+1}.</label>
                                 <input type="text" id={`inputCharacterQuote${index + 1}`} value={inputCharacterQuote} onChange={(ev) => handleInputCharacterQuoteChange(index, ev.target.value)} />
                                 </div>
                             )
                         })
                     }
                 </div>
-                <div>
-                    <button type="button" onClick={handleAddQuoteInput}>Add more quotes</button>
-                    <button type="button" onClick={handleRemoveQuoteInput}>Remove last quote</button>
+                <div className="buttonSection">
+                    <button type="button" onClick={handleAddQuoteInput} disabled={inputCharacterQuotes.length >= 8}>Add more quotes</button>
+                    <button type="button" onClick={handleRemoveQuoteInput} disabled={inputCharacterQuotes.length <= 1}>Remove last quote</button>
                 </div>
                 <div>
                     <button type="submit">Create Character</button>
                     <p>{errorMessage}</p>
                 </div>
-            </form>
+            </FormSection>
         </>
     )
 }
 
 export default CreateNewCharacter;
+
+const FormSection = styled.form`
+    font-size: 1rem;
+    text-align: center;
+    label {
+        font-weight: bold;
+    }
+    input {
+        font-size: 1rem;
+        border: 0.1rem solid #2E2B2B;
+        padding: 0 0.25rem;
+    }
+    .nameRow {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 0.5rem;
+    }
+    .storySection {
+        margin: 0.5rem;
+        label {
+            display: block;
+            margin: 0.5rem 0 0;
+        }
+        textarea {
+            font-size: 0.9rem;
+            width: 100%;
+            min-height: 5rem;
+            border: 0.1rem solid #2E2B2B;
+            margin: 0.5rem 0;
+            resize: none;
+            box-sizing: border-box;
+        }
+    }
+    .quoteRow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        margin: 0.5rem auto;
+        gap: 0.5rem;
+        box-sizing: border-box;
+        label {
+            flex: 0 0 auto;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+        input {
+            flex: 1;
+            box-sizing: border-box;
+        }
+    }
+    .buttonSection {
+        button {
+            font-size: 1rem;
+            background-color: #A68B6E;
+            color: #1C1C1C;
+            border: 0.15rem solid #2E2B2B;
+            margin: 0 0.5rem;
+            opacity: 25%;
+        }
+        button:enabled {
+            opacity: 100%;
+            cursor: pointer;
+        }
+        button:active {
+            transform: scale(0.9);
+        }
+    }
+`

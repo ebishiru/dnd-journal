@@ -196,6 +196,7 @@ const FormSection = styled.form`
         margin-right: 0.5rem;
     }
     input {
+        font-size: 1rem;
         border: 0.1rem solid #2E2B2B;
         border-radius: 5px;
         padding: 0 0.25rem;
