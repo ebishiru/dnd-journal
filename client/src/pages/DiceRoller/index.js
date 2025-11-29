@@ -53,8 +53,8 @@ const DiceRoller = () => {
                 <RollButton 
                     onClick={rollDie} 
                     disabled={dieIsRolling}
-                    rollValue={dieResult}
-                    maxValue={dieMaxValue}>
+                    $rollValue={dieResult}
+                    $maxValue={dieMaxValue}>
                     {dieIsRolling ? temporaryDie : dieResult }
                 </RollButton>
             </RollingContainer>
@@ -67,7 +67,7 @@ const DiceRoller = () => {
             <DiceHistoryContainer>
                 {diceHistory.map((entry, index) => (
                     <p key={index}>
-                        You rolled a {entry.value} with the D{entry.die}. 
+                        You rolled a <span>{entry.value}</span> with the D{entry.die}. 
                         {entry.value === 1 && " (Lowest Roll!)"} 
                         {entry.value === entry.die && " (Critical success!)"}
                     </p>
@@ -101,8 +101,8 @@ const RollButton = styled.button`
     border-radius: 5px;
     border: 3px solid #2E2B2B;
     cursor: pointer;
-    background-color: ${({rollValue, maxValue}) => {
-        if (rollValue === maxValue) return "#D4AF37";
+    background-color: ${({$rollValue, $maxValue}) => {
+        if ($rollValue === $maxValue) return "#D4AF37";
         return "white";
     }};
 `
@@ -132,5 +132,9 @@ const DiceHistoryContainer = styled.div`
     background-color: #A68B6E;
     p {
         font-size: 1rem;
+    }
+    span {
+        font-weight: bold;
+        color: #6C3483;
     }
 `

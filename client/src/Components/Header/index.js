@@ -16,8 +16,8 @@ const Header = () => {
             {
                 showButton && <Link to={"/"}><HomeButton>Home</HomeButton></Link>
             }
-            <TitleText isHome={location.pathname === "/"}>D.N.D.</TitleText>
-            <TitleText isHome={location.pathname === "/"}>DUNGEON NOTES DATABASE</TitleText>
+            <TitleText $isHome={location.pathname === "/"}>D.N.D.</TitleText>
+            <TitleText $isHome={location.pathname === "/"}>DUNGEON NOTES DATABASE</TitleText>
         </HeaderContainer>
     )
 }
@@ -30,21 +30,27 @@ const HeaderContainer = styled.div`
     text-align: center;
     width: 100%;
     position: relative;
-    padding: 1.5rem 0;
+    padding: 1.75rem 0;
+    button {
+        background-color: #A68B6E;
+        color: #1C1C1C;
+        font-size: 1.3rem;
+        border: 0.15rem solid #2E2B2B;
+        cursor: pointer;
+    }
+    button:active {
+        transform: scale(0.9);
+    }
 `
-
 const TitleText = styled.p`
-    font-size: ${(props) => (props.isHome ? "1.6rem" : "1.3rem")};
+    font-size: ${(props) => (props.$isHome ? "1.6rem" : "1.3rem")};
     font-weight: bold;
 `
-
-
 const BackButton = styled.button`
     position: absolute;
     top: 0;
     left: 0;
 `
-
 const HomeButton = styled.button`
     position: absolute;
     top: 0;

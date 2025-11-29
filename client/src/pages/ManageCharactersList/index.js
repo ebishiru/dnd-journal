@@ -47,7 +47,6 @@ const ManageCharactersList = () => {
 
     return (
         <>
-            <p>Manage characters list.</p>
             <HeaderRow>
                 <span>Character</span>
                 <span>Author</span>

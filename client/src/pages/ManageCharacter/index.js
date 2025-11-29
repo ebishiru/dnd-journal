@@ -238,6 +238,9 @@ const FormSection = styled.form`
             font-size: 1.5rem;
             margin: 1rem;
         }
+        button:disabled {
+            opacity: 25%;
+        }
         .errorMessage {
             color: #C0392B;
         }

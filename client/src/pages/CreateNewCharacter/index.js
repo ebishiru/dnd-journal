@@ -119,7 +119,7 @@ const CreateNewCharacter = () => {
                     <button type="button" onClick={handleRemoveQuoteInput} disabled={inputCharacterQuotes.length <= 1}>Remove last quote</button>
                 </div>
                 <div className="submitSection">
-                    <button type="submit">Create Character</button>
+                    <button type="submit" disabled={status !== "idle"}>Create Character</button>
                     <p className="errorMessage">{errorMessage}</p>
                 </div>
             </FormSection>
@@ -203,6 +203,9 @@ const FormSection = styled.form`
         button {
             font-size: 1.5rem;
             margin: 1rem;
+        }
+        button:disabled {
+            opacity: 25%;
         }
         .errorMessage {
             color: #C0392B;
