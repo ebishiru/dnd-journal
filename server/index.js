@@ -10,6 +10,7 @@ const getCharacters = require("./handlers/getCharacters");
 const getCharacter = require("./handlers/getCharacter");
 const createCharacter = require("./handlers/createCharacter");
 const editCharacter = require("./handlers/editCharacter");
+const deleteCharacter = require("./handlers/deleteCharacter");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get("/characters", getCharacters);
 app.get("/character/:_id", getCharacter);
 app.post("/createCharacter", createCharacter);
 app.patch("/editCharacter", editCharacter);
+app.delete("/character", deleteCharacter);
 
 //catch-all middleware
 app.use((req, res) => {
