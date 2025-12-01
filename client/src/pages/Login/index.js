@@ -217,7 +217,7 @@ const FormSection = styled.form`
         opacity: 100%;
         cursor: pointer;
     }
-    button:active {
+    button:enabled:active {
         transform: scale(0.9);
     }
     .errorMessage {

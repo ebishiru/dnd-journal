@@ -18,6 +18,9 @@ const ManageCharacter = () => {
     const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([""]);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
+    const [ deleteConfirm, setDeleteConfirm ] = useState(false);
+    const [ deleteErrorMessage, setDeleteErrorMessage ] = useState(null);
+
     //Ensure user is logged in.
     useEffect(() => {
         if (!currentUser) {
@@ -115,6 +118,40 @@ const ManageCharacter = () => {
         }
     }
 
+    //Confirm delete character
+    const handleDeleteCharacter = async (ev) => {
+        ev.preventDefault();
+        setStatus("processing");
+        setDeleteErrorMessage(null);
+        const characterInfo = {
+            _id
+        }
+        const body = JSON.stringify( characterInfo );
+        const options = {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body
+        }
+        try {
+            const response = await fetch("/character", options);
+            const data = await response.json();
+            if (data.status !== 200) {
+                setDeleteErrorMessage(data.message);
+                setStatus("idle");
+            } else {
+                console.log("Character successfully deleted");
+                setStatus("idle");
+                navigate("/manage");
+            }
+        } catch (error) {
+            setStatus("idle");
+            setDeleteErrorMessage(error.message);
+        }
+    }
+
     if (!foundCharacter) {
         return (
             <p>Loading Character...</p>
@@ -154,6 +191,15 @@ const ManageCharacter = () => {
                 <div className="submitSection">
                     <button type="submit" disabled={status !== "idle"}>Save changes</button>
                     <p className="errorMessage">{errorMessage}</p>
+                </div>
+                <div className="deleteSection">
+                    <p>“Do you intend to strike this name from the annals forever?”</p>
+                    <div className="checkboxRow">
+                        <input type="checkbox" id="deleteCheckbox" checked={deleteConfirm} onChange={(ev) => setDeleteConfirm(ev.target.checked)}/>
+                        <label htmlFor="deleteCheckbox">I understand that this action cannot be undone.</label>
+                    </div>
+                    <button type="button" onClick={handleDeleteCharacter} disabled={!deleteConfirm || status !== "idle"}>Delete Character</button>
+                    <p className="errorMessage">{deleteErrorMessage}</p>
                 </div>
             </FormSection>
         </>
@@ -219,7 +265,7 @@ const FormSection = styled.form`
         color: #1C1C1C;
         border: 0.15rem solid #2E2B2B;
     }
-    button:active {
+    button:enabled:active {
         transform: scale(0.9);
     }
     .buttonSection {
@@ -240,6 +286,30 @@ const FormSection = styled.form`
         }
         button:disabled {
             opacity: 25%;
+        }
+        .errorMessage {
+            color: #C0392B;
+        }
+    }
+    .deleteSection {
+        border-top: 0.2rem dashed #A68B6E;
+        margin: 1.5rem 0;
+        p {
+            margin: 1.5rem 0 0.5rem;
+        }
+        .checkboxRow {
+            margin: 0.5rem;
+        }
+        button {
+            background-color: #C0392B;
+            color: #FAF3E0;
+            font-size: 1.5rem;
+            margin: 0.5rem;
+            opacity: 25%
+        }
+        button:enabled {
+            opacity: 100%;
+            cursor: pointer;
         }
         .errorMessage {
             color: #C0392B;

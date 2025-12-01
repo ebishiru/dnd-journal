@@ -185,7 +185,7 @@ const FormSection = styled.form`
         color: #1C1C1C;
         border: 0.15rem solid #2E2B2B;
     }
-    button:active {
+    button:enabled:active {
         transform: scale(0.9);
     }
     .buttonSection {
