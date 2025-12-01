@@ -12,6 +12,7 @@ const createCharacter = require("./handlers/createCharacter");
 const editCharacter = require("./handlers/editCharacter");
 const deleteCharacter = require("./handlers/deleteCharacter");
 
+const getCampaigns = require("./handlers/getCampaigns")
 const createCampaign = require("./handlers/createCampaign");
 
 const app = express();
@@ -27,6 +28,7 @@ app.post("/createCharacter", createCharacter);
 app.patch("/editCharacter", editCharacter);
 app.delete("/character", deleteCharacter);
 
+app.get("/campaigns", getCampaigns);
 app.post("/createCampaign", createCampaign);
 
 //catch-all middleware
