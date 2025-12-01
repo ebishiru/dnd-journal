@@ -4,10 +4,10 @@ const { MONGO_URI } = process.env;
 const { v4: uuidv4 } = require("uuid");
 
 const DB = "dndJournal";
-const CHARACTERS_COLLECTION = "characters";
+const CAMPAIGNS_COLLECTION = "campaigns";
 
-const createCharacter = async (req, res) => {
-    const { author, name, story, quotes } = req.body;
+const createCampaign = async (req, res) => {
+    const { author, title, story } = req.body;
     const client = new MongoClient(MONGO_URI);
     const date = new Date();
 
@@ -21,10 +21,10 @@ const createCharacter = async (req, res) => {
     }
     const formattedDate = formatDate(date);
 
-    if (!name) {
+    if (!title) {
         return res.status(400).json({
             status: 400,
-            message: "Missing Character Name"
+            message: "Missing Campaign Title"
         })
     }
 
@@ -32,43 +32,39 @@ const createCharacter = async (req, res) => {
         await client.connect();
         const db = client.db(DB);
 
-        //Create new character document
-        const newCharacter = {
+        //Create a new campaign document
+        const newCampaign = {
             _id: uuidv4(),
             author,
             createdAt: formattedDate,
             lastEdit: formattedDate,
-            name,
+            title,
             story: story || "",
-            quotes: quotes || []
         }
-        const result = await db.collection(CHARACTERS_COLLECTION).insertOne(newCharacter);
+        const result = await db.collection(CAMPAIGNS_COLLECTION).insertOne(newCampaign);
 
         //Verify if there's any server issues
         if (!result.acknowledged) {
             return res.status(500).json({
                 status: 500,
-                message: "Server issue - Character not created."
+                message: "Server issue - Campaign not created."
             })
         }
 
-        //If Character is created
+        //If Campaign is successfully created
         res.status(201).json({
             status: 201,
-            message: "Character successfully created.",
-            data: newCharacter
+            message: "Campaign successfully created.",
+            data: newCampaign
         })
-
     } catch (error) {
         res.status(502).json({
             status: 502,
-            message: error.message,
+            message: error.message
         })
-
     } finally {
         await client.close();
     }
-
 }
 
-module.exports = createCharacter;
+module.exports = createCampaign;
