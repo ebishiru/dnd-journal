@@ -64,7 +64,7 @@ const CreateNewCampaign = () => {
 
     return (
         <>
-            <FormSection onsubmit={handleCreateCampaign}>
+            <FormSection onSubmit={handleCreateCampaign}>
                 <p>“Pray, what title shall we bestow upon this grand tale?”</p>
                 <div className="titleRow">
                     <label htmlFor="campaignTitle">Title:</label>
@@ -73,7 +73,7 @@ const CreateNewCampaign = () => {
                 <div className="storySection">
                     <p>“Well then, adventurers… tell us how this tale unfolds.”</p>
                     <label htmlFor="campaignStory">-- Story --</label>
-                    <textarea id="campaignStory" value={inputCampaignStory} onChange={(ev)=>{setInputCampaignStory(ev.target.value)}}></textarea>
+                    <textarea id="campaignStory" value={inputCampaignStory} onChange={(ev)=>{setInputCampaignStory(ev.target.value); autoGrow(ev.target);}}></textarea>
                 </div>
                 <div className="submitSection">
                     <button type="submit" disabled={status !== "idle"}>Create Campaign</button>

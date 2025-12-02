@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import CharactersList from "./Pages/CharactersList";
 import CharacterPage from "./Pages/CharacterPage";
 import CampaignsList from "./Pages/CampaignsList";
+import CampaignPage from "./Pages/CampaignPage";
 import ManageInfo from "./Pages/ManageInfo";
 import CreateNewCharacter from "./Pages/CreateNewCharacter";
 import ManageCharactersList from "./Pages/ManageCharactersList";
@@ -22,6 +23,7 @@ const App = () => {
                 <Route path="/characters" element={<CharactersList />} />
                 <Route path="/character/:_id" element={<CharacterPage />} />
                 <Route path="/campaigns" element={<CampaignsList />} />
+                <Route path="/campaign/:_id" element={<CampaignPage />} />
                 <Route path="/manage" element={<ManageInfo />} />
                 <Route path="/manage/character/new" element={<CreateNewCharacter />} />
                 <Route path="/manage/characters" element={<ManageCharactersList />} />

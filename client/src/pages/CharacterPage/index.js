@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
 const CharacterPage = () => {
-    const navigate = useNavigate();
     const { _id } = useParams();
 
     const [ character, setCharacter ] = useState(null);
