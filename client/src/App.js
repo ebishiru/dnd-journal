@@ -11,6 +11,7 @@ import ManageCharactersList from "./Pages/ManageCharactersList";
 import ManageCharacter from "./Pages/ManageCharacter";
 import CreateNewCampaign from "./Pages/CreateNewCampaign";
 import ManageCampaignsList from "./Pages/ManageCampaignsList";
+import ManageCampaign from "./Pages/ManageCampaign";
 import Login from "./Pages/Login";
 import DiceRoller from "./Pages/DiceRoller";
 
@@ -31,6 +32,7 @@ const App = () => {
                 <Route path="/manage/character/:_id" element={<ManageCharacter />} />
                 <Route path="/manage/campaign/new" element={<CreateNewCampaign />} />
                 <Route path="/manage/campaigns" element={<ManageCampaignsList />} />
+                <Route path="/manage/campaign/:_id" element={<ManageCampaign />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/diceroller" element={<DiceRoller />} />
             </Routes>
