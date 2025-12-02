@@ -15,6 +15,8 @@ const deleteCharacter = require("./handlers/deleteCharacter");
 const getCampaigns = require("./handlers/getCampaigns")
 const getCampaign = require("./handlers/getCampaign");
 const createCampaign = require("./handlers/createCampaign");
+const editCampaign = require("./handlers/editCampaign");
+const deleteCampaign = require("./handlers/deleteCampaign");
 
 const app = express();
 
@@ -32,6 +34,8 @@ app.delete("/character", deleteCharacter);
 app.get("/campaigns", getCampaigns);
 app.get("/campaign/:_id", getCampaign);
 app.post("/createCampaign", createCampaign);
+app.patch("/editCampaign", editCampaign);
+app.delete("/campaign", deleteCampaign);
 
 //catch-all middleware
 app.use((req, res) => {
