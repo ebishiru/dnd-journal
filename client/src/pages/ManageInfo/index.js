@@ -26,7 +26,7 @@ const ManageInfo = () => {
             <ButtonsContainer>
                 <Link to={"/manage/character/new"}><button>Create New Character</button></Link>
                 <Link to={"/manage/characters"}><button>Manage Existing Character</button></Link>
-                <button>Create New Campaign</button>
+                <Link to={"/manage/campaign/new"}><button>Create New Campaign</button></Link>
                 <button>Manage Existing Campaign</button>
             </ButtonsContainer>
             
