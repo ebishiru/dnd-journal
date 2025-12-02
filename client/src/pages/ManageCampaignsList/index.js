@@ -5,11 +5,11 @@ import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
 import styled from "styled-components";
 
-const ManageCharactersList = () => {
+const ManageCampaignsList = () => {
     const navigate = useNavigate();
     const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
 
-    const [ allUserCharacters, setAllUserCharacters ] = useState(null);
+    const [ allUserCampaigns, setAllUserCampaigns ] = useState(null);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
     useEffect(() => {
@@ -17,58 +17,56 @@ const ManageCharactersList = () => {
             navigate("/");
         }
 
-        const fetchCharacters = async (ev) => {
+        const fetchCampaigns = async (ev) => {
             try {
-                const response = await fetch("/characters");
+                const response = await fetch("/campaigns");
                 const data = await response.json();
                 if (data.status !== 200) {
                     setErrorMessage(data.message);
                 } else {
-                    //only keep characters that are created by the user
-                    const userCharacters = data.data.filter((character) => {
-                        return character.author === currentUser
+                    //only keep campaigns made by user
+                    const userCampaigns = data.data.filter((campaign) => {
+                        return campaign.author === currentUser
                     });
-                    setAllUserCharacters(userCharacters);
+                    setAllUserCampaigns(userCampaigns);
                 }
             } catch (error) {
                 setErrorMessage(error.message);
             }
         }
 
-        fetchCharacters();
-
+        fetchCampaigns();
     },[currentUser])
 
-    if (!allUserCharacters) {
+    if(!allUserCampaigns) {
         return (
-            <p>Loading Characters...</p>
+            <p>Loading Campaigns...</p>
         )
     }
 
     return (
         <>
             <HeaderRow>
-                <span>Character</span>
+                <span>Title</span>
                 <span>Author</span>
                 <span>Created</span>
             </HeaderRow>
             {
-                allUserCharacters.map((character) => {
+                allUserCampaigns.map((campaign) => {
                     return (
-                        <CharacterRow key={character._id}>
-                            <span><Link to={`/manage/character/${character._id}`}  className="nameLink">{character.name}</Link></span>
-                            <p>{character.author}</p>
-                            <p>{character.createdAt}</p>
+                        <CharacterRow key={campaign._id}>
+                            <span><Link to={`/manage/campaign/${campaign._id}`}  className="titleLink">{campaign.title}</Link></span>
+                            <p>{campaign.author}</p>
+                            <p>{campaign.createdAt}</p>
                         </CharacterRow>
                     )
-                    
                 })
             }
         </>
     )
 }
 
-export default ManageCharactersList;
+export default ManageCampaignsList;
 
 const HeaderRow = styled.div`
     display: grid;
@@ -79,6 +77,7 @@ const HeaderRow = styled.div`
     font-weight: bold;
     background-color: #A68B6E;
 `
+
 const CharacterRow = styled.div`
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
@@ -93,7 +92,7 @@ const CharacterRow = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     }
-    .nameLink {
+    .titleLink {
         color: #6C3483;
         font-weight: bold;
     }

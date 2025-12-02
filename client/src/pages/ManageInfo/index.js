@@ -16,7 +16,6 @@ const ManageInfo = () => {
         }
     }, [currentUser, navigate])
 
-    console.log(currentUser);
     return (
         <>
             <TextContainer>
@@ -27,7 +26,7 @@ const ManageInfo = () => {
                 <Link to={"/manage/character/new"}><button>Create New Character</button></Link>
                 <Link to={"/manage/characters"}><button>Manage Existing Character</button></Link>
                 <Link to={"/manage/campaign/new"}><button>Create New Campaign</button></Link>
-                <button>Manage Existing Campaign</button>
+                <Link to={"/manage/campaigns"}><button>Manage Existing Campaign</button></Link>
             </ButtonsContainer>
             
         </>
