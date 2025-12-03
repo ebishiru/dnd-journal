@@ -7,6 +7,9 @@ const CharactersList = () => {
     const [ allCharacters, setAllCharacters ] = useState(null);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
+    const [ sortNameAsc, setSortNameAsc ] = useState(true);
+    const [ sortDateAsc, setSortDateAsc ] = useState(true);
+
     useEffect(() => {
         const fetchCharacters = async (ev) => {
             try {
@@ -25,6 +28,30 @@ const CharactersList = () => {
         fetchCharacters();
     }, [])
 
+    //Sorting handlers
+    const handleSortByName = () => {
+        const sorted = [...allCharacters].sort((a, b) => {
+            return sortNameAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        });
+        setAllCharacters(sorted);
+        setSortNameAsc(!sortNameAsc);
+    }
+
+    const parseDDMMYYYY = (dateString) => {
+        const [ day, month, year] =dateString.split("/").map(Number);
+        return new Date(year, month - 1, day);
+    }
+
+    const handleSortByDate = () => {
+        const sorted = [...allCharacters].sort((a, b) => {
+            const dateA = parseDDMMYYYY(a.createdAt);
+            const dateB = parseDDMMYYYY(b.createdAt);
+            return sortDateAsc ? dateA - dateB : dateB - dateA;
+        });
+        setAllCharacters(sorted);
+        setSortDateAsc(!sortDateAsc);
+    }
+
     if (!allCharacters) {
         return (
             <p>Loading Characters...</p>
@@ -34,9 +61,9 @@ const CharactersList = () => {
     return (
         <>
             <HeaderRow>
-                <span>Character</span>
+                <span>Character<button onClick={handleSortByName}>{sortNameAsc ? "▲" : "▼"}</button></span>
                 <span>Author</span>
-                <span>Created</span>
+                <span>Created<button onClick={handleSortByDate}>{sortDateAsc ? "▲" : "▼"}</button></span>
             </HeaderRow>
             {
                 allCharacters.map((character) => {
@@ -64,6 +91,14 @@ const HeaderRow = styled.div`
     border: 0.1rem solid #2E2B2B;
     font-weight: bold;
     background-color: #A68B6E;
+    span {
+        gap: 0.5rem;
+    }
+    button {
+        max-width: 1rem;
+        padding: 0;
+        margin: 0;
+    }
 `
 
 const CharacterRow = styled.div`
