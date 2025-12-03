@@ -99,8 +99,9 @@ const FormSection = styled.form`
     }
     .titleRow {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
+        gap: 1rem;
         margin: 0.5rem;
     }
     .storySection {

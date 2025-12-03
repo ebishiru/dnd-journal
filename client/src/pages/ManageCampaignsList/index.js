@@ -48,7 +48,6 @@ const ManageCampaignsList = () => {
         <>
             <HeaderRow>
                 <span>Title</span>
-                <span>Author</span>
                 <span>Created</span>
             </HeaderRow>
             {
@@ -56,7 +55,6 @@ const ManageCampaignsList = () => {
                     return (
                         <CharacterRow key={campaign._id}>
                             <span><Link to={`/manage/campaign/${campaign._id}`}  className="titleLink">{campaign.title}</Link></span>
-                            <p>{campaign.author}</p>
                             <p>{campaign.createdAt}</p>
                         </CharacterRow>
                     )
@@ -70,7 +68,7 @@ export default ManageCampaignsList;
 
 const HeaderRow = styled.div`
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
     gap: 1rem;
     padding: 0.5rem;
     border: 0.1rem solid #2E2B2B;
@@ -80,7 +78,7 @@ const HeaderRow = styled.div`
 
 const CharacterRow = styled.div`
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
     gap: 1rem;
     padding: 0.5rem;
     border-bottom: 0.1rem dashed #2E2B2B;

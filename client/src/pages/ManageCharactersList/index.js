@@ -49,7 +49,6 @@ const ManageCharactersList = () => {
         <>
             <HeaderRow>
                 <span>Character</span>
-                <span>Author</span>
                 <span>Created</span>
             </HeaderRow>
             {
@@ -57,7 +56,6 @@ const ManageCharactersList = () => {
                     return (
                         <CharacterRow key={character._id}>
                             <span><Link to={`/manage/character/${character._id}`}  className="nameLink">{character.name}</Link></span>
-                            <p>{character.author}</p>
                             <p>{character.createdAt}</p>
                         </CharacterRow>
                     )
@@ -72,7 +70,7 @@ export default ManageCharactersList;
 
 const HeaderRow = styled.div`
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
     gap: 1rem;
     padding: 0.5rem;
     border: 0.1rem solid #2E2B2B;
@@ -81,7 +79,7 @@ const HeaderRow = styled.div`
 `
 const CharacterRow = styled.div`
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr;
     gap: 1rem;
     padding: 0.5rem;
     border-bottom: 0.1rem dashed #2E2B2B;

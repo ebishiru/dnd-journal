@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Header from "./Components/Header";
+import { PageWrapper } from "./Components/PageWrapper";
 import Home from "./Pages/Home";
 import CharactersList from "./Pages/CharactersList";
 import CharacterPage from "./Pages/CharacterPage";
@@ -19,6 +20,7 @@ const App = () => {
 
     return (
         <Router>
+            <PageWrapper>
             <Header />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -36,6 +38,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/diceroller" element={<DiceRoller />} />
             </Routes>
+            </PageWrapper>
         </Router>
     )
 }

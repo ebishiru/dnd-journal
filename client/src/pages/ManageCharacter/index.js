@@ -222,8 +222,9 @@ const FormSection = styled.form`
     }
     .nameRow {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
+        gap: 1rem;
         margin: 0.5rem;
     }
     .storySection {

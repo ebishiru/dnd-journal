@@ -114,7 +114,7 @@ const DieButton = styled.button`
     font-size: 1.2rem;
     width: 3rem;
     height: 3rem;
-    margin: 1rem 0.5rem;
+    margin: 1rem 0.25rem;
     border-radius: 5px;
     border: 0.1rem solid #2E2B2B;
     background: ${(props) => (props.selected ? "#C0392B" : "white")};
