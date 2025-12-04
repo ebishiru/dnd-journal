@@ -12,6 +12,9 @@ const ManageCampaignsList = () => {
     const [ allUserCampaigns, setAllUserCampaigns ] = useState(null);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
+    const [ sortTitleAsc, setSortTitleAsc ] = useState(true);
+    const [ sortDateAsc, setSortDateAsc ] = useState(true);
+
     useEffect(() => {
         if (!currentUser) {
             navigate("/");
@@ -38,6 +41,30 @@ const ManageCampaignsList = () => {
         fetchCampaigns();
     },[currentUser])
 
+    //Sorting handlers
+    const handleSortByTitle = () => {
+        const sorted = [...allUserCampaigns].sort((a, b) => {
+            return sortTitleAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+        });
+        setAllUserCampaigns(sorted);
+        setSortTitleAsc(!sortTitleAsc);
+    }
+
+    const parseDDMMYYYY = (dateString) => {
+        const [ day, month, year] =dateString.split("/").map(Number);
+        return new Date(year, month - 1, day);
+    }
+
+    const handleSortByDate = () => {
+        const sorted = [...allUserCampaigns].sort((a, b) => {
+            const dateA = parseDDMMYYYY(a.createdAt);
+            const dateB = parseDDMMYYYY(b.createdAt);
+            return sortDateAsc ? dateA - dateB : dateB - dateA;
+        });
+        setAllUserCampaigns(sorted);
+        setSortDateAsc(!sortDateAsc);
+    }
+
     if(!allUserCampaigns) {
         return (
             <p>Loading Campaigns...</p>
@@ -47,8 +74,8 @@ const ManageCampaignsList = () => {
     return (
         <>
             <HeaderRow>
-                <span>Title</span>
-                <span>Created</span>
+                <span>Title<button onClick={handleSortByTitle}>{sortTitleAsc ? "▲" : "▼"}</button></span>
+                <span>Created<button onClick={handleSortByDate}>{sortDateAsc ? "▼" : "▲"}</button></span>
             </HeaderRow>
             {
                 allUserCampaigns.map((campaign) => {
@@ -68,17 +95,25 @@ export default ManageCampaignsList;
 
 const HeaderRow = styled.div`
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 2fr;
     gap: 1rem;
     padding: 0.5rem;
     border: 0.1rem solid #2E2B2B;
     font-weight: bold;
     background-color: #A68B6E;
+    button {
+        background-color: #2E2B2B;
+        color: #D4AF37;
+        width: 1rem;
+        height: 1rem;
+        padding: 0;
+        margin-left: 0.25rem;
+    }
 `
 
 const CharacterRow = styled.div`
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 2fr;
     gap: 1rem;
     padding: 0.5rem;
     border-bottom: 0.1rem dashed #2E2B2B;

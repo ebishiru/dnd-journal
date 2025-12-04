@@ -12,6 +12,9 @@ const ManageCharactersList = () => {
     const [ allUserCharacters, setAllUserCharacters ] = useState(null);
     const [ errorMessage, setErrorMessage ] = useState(null);
 
+    const [ sortNameAsc, setSortNameAsc ] = useState(true);
+    const [ sortDateAsc, setSortDateAsc ] = useState(true);
+
     useEffect(() => {
         if (!currentUser) {
             navigate("/");
@@ -39,6 +42,30 @@ const ManageCharactersList = () => {
 
     },[currentUser])
 
+    //Sorting handlers
+    const handleSortByName = () => {
+        const sorted = [...allUserCharacters].sort((a, b) => {
+            return sortNameAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+        });
+        setAllUserCharacters(sorted);
+        setSortNameAsc(!sortNameAsc);
+    }
+
+    const parseDDMMYYYY = (dateString) => {
+        const [ day, month, year] =dateString.split("/").map(Number);
+        return new Date(year, month - 1, day);
+    }
+
+    const handleSortByDate = () => {
+        const sorted = [...allUserCharacters].sort((a, b) => {
+            const dateA = parseDDMMYYYY(a.createdAt);
+            const dateB = parseDDMMYYYY(b.createdAt);
+            return sortDateAsc ? dateA - dateB : dateB - dateA;
+        });
+        setAllUserCharacters(sorted);
+        setSortDateAsc(!sortDateAsc);
+    }
+
     if (!allUserCharacters) {
         return (
             <p>Loading Characters...</p>
@@ -48,8 +75,8 @@ const ManageCharactersList = () => {
     return (
         <>
             <HeaderRow>
-                <span>Character</span>
-                <span>Created</span>
+                <span>Character<button onClick={handleSortByName}>{sortNameAsc ? "▲" : "▼"}</button></span>
+                <span>Created<button onClick={handleSortByDate}>{sortDateAsc ? "▼" : "▲"}</button></span>
             </HeaderRow>
             {
                 allUserCharacters.map((character) => {
@@ -70,16 +97,24 @@ export default ManageCharactersList;
 
 const HeaderRow = styled.div`
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 2fr;
     gap: 1rem;
     padding: 0.5rem;
     border: 0.1rem solid #2E2B2B;
     font-weight: bold;
     background-color: #A68B6E;
+    button {
+        background-color: #2E2B2B;
+        color: #D4AF37;
+        width: 1rem;
+        height: 1rem;
+        padding: 0;
+        margin-left: 0.25rem;
+    }
 `
 const CharacterRow = styled.div`
     display: grid;
-    grid-template-columns: 4fr 1fr;
+    grid-template-columns: 7fr 2fr;
     gap: 1rem;
     padding: 0.5rem;
     border-bottom: 0.1rem dashed #2E2B2B;

@@ -64,14 +64,21 @@ const Login = () => {
     const handleSignUp = async (ev) => {
         ev.preventDefault();
         setErrorSignMessage(null);
+        //Ensure username is less than 16chars.
+        if (inputSignUsername.length >= 16 || inputSignUsername.length <= 3) {
+            setErrorSignMessage("Username needs to be 4-16 characters.");
+            setInputSignUsername("");
+            return;
+        }
+
         //Verify password and confirm password matches on FE.
         if (inputSignPassword !== inputConfirmPassword) {
-            setErrorSignMessage("Passwords don't match. Please try again")
+            setErrorSignMessage("Passwords don't match. Please try again.")
             setInputSignPassword("");
             setInputConfirmPassword("");
             return;
         }
-        
+
         setStatus("logging");
         const signUpData = {
             username: inputSignUsername,
@@ -94,10 +101,12 @@ const Login = () => {
                 setErrorSignMessage(data.message);
             } else {
                 setStatus("idle");
+                setCurrentUser(data.data)
                 setInputSignUsername("");
                 setInputPassword("");
                 setInputConfirmPassword("");
                 console.log(data.message);
+                navigate("/");
             }
         } catch (error) {
             setStatus("idle");
