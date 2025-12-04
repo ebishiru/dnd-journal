@@ -68,7 +68,10 @@ const ManageCharactersList = () => {
 
     if (!allUserCharacters) {
         return (
-            <p>Loading Characters...</p>
+            <LoadingContainer>
+                <img src="/fire.gif" />
+                <p>Loading...</p>
+            </LoadingContainer>
         )
     }
 
@@ -94,6 +97,18 @@ const ManageCharactersList = () => {
 }
 
 export default ManageCharactersList;
+
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    gap: 1rem;
+    p {
+        font-weight: bold;
+    }
+`
 
 const HeaderRow = styled.div`
     display: grid;

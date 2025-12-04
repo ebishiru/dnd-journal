@@ -63,7 +63,10 @@ const CampaignsList = () => {
 
     if (!allCampaigns) {
         return (
-            <p>Loading Campaigns...</p>
+            <LoadingContainer>
+                <img src="/fire.gif" />
+                <p>Loading...</p>
+            </LoadingContainer>
         )
     }
 
@@ -91,6 +94,17 @@ const CampaignsList = () => {
 
 export default CampaignsList;
 
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    gap: 1rem;
+    p {
+        font-weight: bold;
+    }
+`
 const HeaderRow = styled.div`
     display: grid;
     grid-template-columns: 5fr 2fr 2fr;

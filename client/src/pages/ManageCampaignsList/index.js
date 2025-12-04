@@ -67,7 +67,10 @@ const ManageCampaignsList = () => {
 
     if(!allUserCampaigns) {
         return (
-            <p>Loading Campaigns...</p>
+            <LoadingContainer>
+                <img src="/fire.gif" />
+                <p>Loading...</p>
+            </LoadingContainer>
         )
     }
 
@@ -92,6 +95,18 @@ const ManageCampaignsList = () => {
 }
 
 export default ManageCampaignsList;
+
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    gap: 1rem;
+    p {
+        font-weight: bold;
+    }
+`
 
 const HeaderRow = styled.div`
     display: grid;
