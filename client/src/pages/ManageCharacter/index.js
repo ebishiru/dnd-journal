@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
@@ -32,7 +33,7 @@ const ManageCharacter = () => {
                 const response = await fetch(`/character/${_id}`);
                 const data = await response.json();
                 if (data.status !== 200) {
-                    setErrorMessage(data.message);
+                    toast.error(data.message);
                 } else {
                     //check user is author
                     if (data.data.author !== currentUser) {
@@ -45,7 +46,7 @@ const ManageCharacter = () => {
                     setFoundCharacter(true);
                 }
             } catch (error) {
-                setErrorMessage(error.message);
+                toast.error(error.message);
             }
         }
 
@@ -112,14 +113,15 @@ const ManageCharacter = () => {
             if (data.status !== 202) {
                 setStatus("idle");
                 setErrorMessage(data.message);
+                toast.error(data.message);
             } else {
                 setStatus("idle");
-                console.log("Character successfully editted.");
+                toast.success(data.message);
                 navigate("/manage")
             }
         } catch (error) {
             setStatus("idle");
-            setErrorMessage(error.message);
+            toast.error(error.message);
         }
     }
 
@@ -145,15 +147,16 @@ const ManageCharacter = () => {
             const data = await response.json();
             if (data.status !== 200) {
                 setDeleteErrorMessage(data.message);
+                toast.error(data.message);
                 setStatus("idle");
             } else {
-                console.log("Character successfully deleted");
                 setStatus("idle");
+                toast.success(data.message);
                 navigate("/manage");
             }
         } catch (error) {
             setStatus("idle");
-            setDeleteErrorMessage(error.message);
+            toast.error(error.message);
         }
     }
 

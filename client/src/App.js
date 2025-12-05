@@ -16,6 +16,8 @@ import ManageCampaign from "./Pages/ManageCampaign";
 import Login from "./Pages/Login";
 import DiceRoller from "./Pages/DiceRoller";
 
+import { Toaster } from "sonner";
+
 const App = () => {
 
     return (
@@ -38,6 +40,17 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/diceroller" element={<DiceRoller />} />
             </Routes>
+            <Toaster 
+                position="top-center" 
+                toastOptions={{
+                    style: {
+                        background: "#A68B6E",
+                        border: "2px solid #2E2B2B",
+                        color: "#1C1C1C",
+                        fontFamily: "IM Fell English, serif",
+                        fontSize: "1rem",
+                    }
+            }}/>
             </PageWrapper>
         </Router>
     )

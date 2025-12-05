@@ -56,7 +56,7 @@ const editCampaign = async (req, res) => {
         //Confirm update success
         res.status(202).json({
             status: 202,
-            message: "Character successfully updated."
+            message: "Campaign successfully updated."
         })
     } catch (error) {
         res.status(502).json({

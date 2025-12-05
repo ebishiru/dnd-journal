@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 
@@ -48,16 +49,17 @@ const Login = () => {
             if (data.status !=200) {
                 setStatus("idle");
                 setErrorMessage(data.message);
+                toast.error(data.message);
             } else {
                 setStatus("idle");
                 setCurrentUser(data.data)
                 setInputUsername("");
                 setInputPassword("");
-                console.log(data.message);
+                toast.success(data.message);
             }
         } catch (error) {
             setStatus("idle");
-            setErrorMessage(error.message);
+            toast.error(error.message);
         }
     }
 
@@ -99,18 +101,19 @@ const Login = () => {
             if (data.status !=200) {
                 setStatus("idle");
                 setErrorSignMessage(data.message);
+                toast.error(data.message);
             } else {
                 setStatus("idle");
                 setCurrentUser(data.data)
                 setInputSignUsername("");
                 setInputPassword("");
                 setInputConfirmPassword("");
-                console.log(data.message);
+                toast.success(data.message);
                 navigate("/");
             }
         } catch (error) {
             setStatus("idle");
-            setErrorSignMessage(error.message);
+            toast.error(error.message);
         }
     }
 
