@@ -1,6 +1,6 @@
 # DND journal project
 
-Just a personal project. The idea came from a member of our DND group wants to journal everything we do.
+Just a personal project. The idea came from a member of our family DND group, who wanted to journal everything we do.
 
 I thought it'd be nice to have a place online for them to submit to and for the group to see it whenever.
 
@@ -15,11 +15,14 @@ It'll be nice for the DM to prep stuff and revisit old memories.
 | `"/character:charId"` | Character Page    | 
 | `"/campaign"`         | Campaigns Page    | 
 | `"/campaign:campId"`  | Campaign Page     |
-| `"/login"`            | Login Page        |
-| `"/signup"`           | Sign-up Page      | 
-| `"/profile"`          | Signed-in Page    | 
-| `"/profile/:charId"`  | Edit Character Page  |
-| `"/profile/:campId"`  | Edit Campaign Page |
+| `"/manage"`           | Manage Page        |
+| `"/manage/character/new"` | Create New Character      | 
+| `"/manage/character/:charId"` | Edit Character     |
+| `"/manage/campaign/new"` | Create New Campaign     |  
+| `"/manage/campaign/:campId"` | Edit Campaign      | 
+| `"/login"`          | Sign-in/up Page    | 
+| `"/diceroller"`  | Fun dice roller |
+
 
 ---
 
@@ -28,33 +31,35 @@ It'll be nice for the DM to prep stuff and revisit old memories.
 
 **1. Home Page**
 
-Generic landing page. Tabs for character page, campaign page, and login.
+Main landing page. Contains small description of website and main navigation buttons.
 
 **2. Character Page**
 
-Lists all characters
-
-**2A. Individual character page**
-
-Shows their name, story, notable quotes and pictures.
-
-Author, created Date and edit date are also listed.
+Shows the Character name, their background story, popular quotes,created date and last edit date.
 
 **3. Campaign Page**
 
-Lists all campaigns
+Similar to character page, lists campaign name, the campaign story, created date, author and last edit date.
 
-**3A. Individual Campaign page**
+**4. Character/Campaign Lists**
 
-Shows title, summary, pictures and a prequel&sequel
+Shows a list of all the characters or campaigns. List may be sorted by character name, author or created date.
 
-Author, created date and edit date are also shown too.
+**5. Manage character/campaign**
 
-**4. Dice Roller**
+Only the user's characters/campaign may be edit their own files. Up to 8 quotes can be added and removed. Data may also be deleted after confirmation.
 
-Digital dice roller with all dice types and history log.
+**6. Dice Roller**
 
+Just a fun little dice roller. Different die sizes may be selected. The last 6 results are shown and high and low values have their own text.
 
+## Extra implementations:
+
+For password safety, I included salt and hashing.
+
+For confirmations and errors, I've included toasts for UI/UX.
+
+Created simple figma animation for loading.
 
 ## MongoDB Backend Collection:
 
@@ -63,7 +68,7 @@ Digital dice roller with all dice types and history log.
 {
     _id: uuid v4 (UserId),
     username: string,
-    passwprd: string,
+    passwprd: hashed string,
 }
 ```
 
@@ -76,8 +81,8 @@ Digital dice roller with all dice types and history log.
     lastEdit: Date,
     name: string,
     story: string,
-    quotes: string,
-    pictures: string,
+    quotes: array,
+    pictures: string, (To be implemented later)
 }
 ```
 
@@ -90,9 +95,9 @@ Digital dice roller with all dice types and history log.
     lastEdit: Date,
     title: string,
     story: string,
-    pictures: string,
-    prequelCampaign: CampaignId,
-    sequelCampaign: CampaignId,
+    pictures: string, (To be implemented later)
+    prequelCampaign: CampaignId,  (To be implemented later)
+    sequelCampaign: CampaignId,  (To be implemented later)
 }
 ```
 
@@ -100,14 +105,26 @@ Digital dice roller with all dice types and history log.
 ```
 - Post user (signup)
 - Get user (login)
+- Get characters
+- Get campaigns
+- Get character
+- Get campaign
 
 - Create character
-- Get character
 - Update character (Edit character)
 - Delete character
 
 - Create campaign
-- Get campaign
 - Update campaign (Edit campaign) 
 - Delete campaign
 ```
+
+## Required addons:
+
+**Front End**
+
+all general react dependencies, sonner, styled-components
+
+**Back End**
+
+bcrypt, dotenv, express, mongodb, nodemon, uuid
