@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
+const bcrypt = require("bcrypt");
 
 const DB = "dndJournal"
 const USERS_COLLECTION = "users";
@@ -29,15 +30,17 @@ const logIn = async (req, res) => {
         if (!existingUsername) {
             return res.status(404).json({
                 status: 404,
-                message: "User does not exist."
+                message: "Incorrect credentials. Please try again."
             })
         }
 
-        //Verify that password matches
-        if (password !== existingUsername.password) {
-            return res.status(404).json({
-                status: 404,
-                message: "Incorrect password. Please try again."
+        //Verify that password matches the hashed password
+        const isMatch = await bcrypt.compare(password, existingUsername.password);
+
+        if (!isMatch) {
+            return res.status(401).json({
+                status: 401,
+                message: "Incorrect credentials. Please try again."
             })
         }
 

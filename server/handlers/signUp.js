@@ -2,6 +2,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
 
 const DB = "dndJournal"
 const USERS_COLLECTION = "users";
@@ -34,11 +35,15 @@ const signUp = async (req, res) => {
             });
         }
         
+        //Salt and Hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
         //Create new user
         const newUser = {
             _id: uuidv4(),
             username: normalizedUsername,
-            password,
+            password: hashedPassword,
         };
         const result = await db.collection(USERS_COLLECTION).insertOne(newUser);
 
