@@ -33,6 +33,11 @@ const ManageCampaign = () => {
                 if (data.status !== 200) {
                     setErrorMessage(data.message);
                 } else {
+                    //check user is author
+                    if (data.data.author !== currentUser) {
+                        navigate("/");
+                        return;
+                    }
                     setInputCampaignTitle(data.data.title);
                     setInputCampaignStory(data.data.story);
                     setFoundCampaign(true);
@@ -43,6 +48,7 @@ const ManageCampaign = () => {
         }
 
         fetchCampaign();
+
     }, [currentUser, _id, navigate])
 
     //ensure textarea grows with content

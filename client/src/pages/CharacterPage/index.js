@@ -34,7 +34,10 @@ const CharacterPage = () => {
             )
         } else {
             return (
-            <p>Loading Character...</p>
+            <LoadingContainer>
+                <img src="/fire.gif" />
+                <p>Loading...</p>
+            </LoadingContainer>
             
         )
         }
@@ -68,6 +71,17 @@ const CharacterPage = () => {
 
 export default CharacterPage;
 
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    gap: 1rem;
+    p {
+        font-weight: bold;
+    }
+`
 const CharacterName = styled.p`
     font-size: 2rem;
     font-weight: bold;

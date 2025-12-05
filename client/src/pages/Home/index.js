@@ -30,6 +30,9 @@ const Home = () => {
                     </>
                 }
             </ButtonsContainer>
+            <Footer>
+                <p>Created by <a href="https://ebishiru.github.io/my-portfolio/">Kevin Lo</a></p>
+            </Footer>
         </>
     )
 }
@@ -66,3 +69,14 @@ const ButtonsContainer = styled.div`
     
 `
 
+const Footer = styled.div`
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem;
+    a {
+        text-decoration: none;
+        color: #6C3483;
+    }
+`

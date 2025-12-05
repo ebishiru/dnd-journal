@@ -34,6 +34,11 @@ const ManageCharacter = () => {
                 if (data.status !== 200) {
                     setErrorMessage(data.message);
                 } else {
+                    //check user is author
+                    if (data.data.author !== currentUser) {
+                        navigate("/");
+                        return;
+                    }
                     setInputCharacterName(data.data.name);
                     setInputCharacterStory(data.data.story);
                     setInputCharacterQuotes(data.data.quotes);
