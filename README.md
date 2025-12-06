@@ -51,7 +51,7 @@ Only the user's characters/campaign may be edit their own files. Up to 8 quotes 
 
 **6. Dice Roller**
 
-Just a fun little dice roller. Different die sizes may be selected. The last 6 results are shown and high and low values have their own text.
+Just a fun little dice roller. Different die sizes may be selected. The last 6 results are shown and high and low values have their own text. Audio and confetti can be toggled.
 
 ## Extra implementations:
 
@@ -123,7 +123,7 @@ Created simple figma animation for loading.
 
 **Front End**
 
-all general react dependencies, sonner, styled-components
+all general react dependencies, sonner, canvas-confetti, styled-components
 
 **Back End**
 

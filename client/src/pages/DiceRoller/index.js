@@ -2,6 +2,22 @@ import { useState } from "react";
 
 import styled from "styled-components";
 
+//Audio files
+import low1 from "../../Audio/low1.mp3";
+import low2 from "../../Audio/low2.mp3";
+import low3 from "../../Audio/low3.mp3";
+import low4 from "../../Audio/low4.mp3";
+import mid1 from "../../Audio/mid1.mp3";
+import mid2 from "../../Audio/mid2.mp3";
+import mid3 from "../../Audio/mid3.mp3";
+import mid4 from "../../Audio/mid4.mp3";
+import high1 from "../../Audio/high1.mp3";
+import high2 from "../../Audio/high2.mp3";
+import high3 from "../../Audio/high3.mp3";
+import high4 from "../../Audio/high4.mp3";
+//Confetti
+import confetti from "canvas-confetti";
+
 const DiceRoller = () => {
     const [ dieResult, setDieResult ] = useState(null);
     const [ dieIsRolling, setDieIsRolling ] = useState(false);
@@ -13,6 +29,36 @@ const DiceRoller = () => {
 
     //dice log
     const [ diceHistory, setDiceHistory ] = useState([]);
+
+    //Wacky Mode
+    const [ wackyEnabled, setWackyEnabled ] = useState(false);
+    const [ confettiEnabled, setConfettiEnabled ] = useState(false);
+    const lowSounds = [low1, low2, low3, low4];
+    const midSounds = [mid1, mid2, mid3, mid4];
+    const highSounds = [high1, high2, high3, high4];
+    const playSound = (type) => {
+        let audioPool;
+
+        if (type === "low") audioPool = lowSounds;
+        else if (type === "mid") audioPool = midSounds;
+        else if (type === "high") audioPool = highSounds;
+
+        if (!audioPool) return;
+
+        const randomIndex = Math.floor(Math.random() * audioPool.length);
+        const audio = new Audio(audioPool[randomIndex]);
+
+        audio.volume = 0.8;
+        audio.play();
+    }
+    const fireConfetti = () => {
+        confetti({
+            particleCount: 120,
+            spread: 70,
+            origin: { y: 0.7 },
+            colors: ["#D4AF37"]
+        });
+    }
 
     const rollDie = () => {
         setDieIsRolling(true);
@@ -28,6 +74,20 @@ const DiceRoller = () => {
 
             const finalResult = (Math.ceil(Math.random() * dieMaxValue));
             setDieResult(finalResult)
+
+            //Wacky Mode Audio & Confetti
+            if (wackyEnabled) {
+                if (finalResult <= dieMaxValue * (0.25)) {
+                    playSound("low");
+                } else if ( finalResult > dieMaxValue*0.5 && finalResult <= dieMaxValue*0.75) {
+                    playSound("mid");
+                } else if ( finalResult >= dieMaxValue*0.9) {
+                    playSound("high");
+                }
+            }
+            if (confettiEnabled && finalResult === dieMaxValue) {
+                fireConfetti();
+            }
 
             setDieIsRolling(false);
             setDiceHistory((prev) => {
@@ -73,6 +133,10 @@ const DiceRoller = () => {
                     </p>
                 ))}
             </DiceHistoryContainer>
+            <OptionsContainer>
+                <button onClick={() => setWackyEnabled(!wackyEnabled)}>{wackyEnabled? "Disable Audio" : "Enable Audio"}</button>
+                <button onClick={() => setConfettiEnabled(!confettiEnabled)}>{confettiEnabled? "Disable Confetti" : "Enable Confetti"}</button>
+            </OptionsContainer>
         </PageLayout>
         
     )
@@ -103,6 +167,7 @@ const RollButton = styled.button`
     cursor: pointer;
     background-color: ${({$rollValue, $maxValue}) => {
         if ($rollValue === $maxValue) return "#D4AF37";
+        else if ($rollValue === 1) return "#A68B6E";
         return "white";
     }};
 `
@@ -136,5 +201,21 @@ const DiceHistoryContainer = styled.div`
     span {
         font-weight: bold;
         color: #6C3483;
+    }
+`
+
+const OptionsContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    button {
+        background-color: #A68B6E;
+        color: #1C1C1C;
+        border: 0.15rem solid #2E2B2B;
+        font-size: 1.25rem;
+        cursor: pointer;
+    }
+    button:active {
+        transform: scale(0.9);
     }
 `
