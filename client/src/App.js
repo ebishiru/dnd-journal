@@ -1,20 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Header from "./Components/Header";
 import { PageWrapper } from "./Components/PageWrapper";
-import Home from "./Pages/Home";
-import CharactersList from "./Pages/CharactersList";
-import CharacterPage from "./Pages/CharacterPage";
-import CampaignsList from "./Pages/CampaignsList";
-import CampaignPage from "./Pages/CampaignPage";
-import ManageInfo from "./Pages/ManageInfo";
-import CreateNewCharacter from "./Pages/CreateNewCharacter";
-import ManageCharactersList from "./Pages/ManageCharactersList";
-import ManageCharacter from "./Pages/ManageCharacter";
-import CreateNewCampaign from "./Pages/CreateNewCampaign";
-import ManageCampaignsList from "./Pages/ManageCampaignsList";
-import ManageCampaign from "./Pages/ManageCampaign";
-import Login from "./Pages/Login";
-import DiceRoller from "./Pages/DiceRoller";
+import Home from "./Pages/Home/index.js";
+import CharactersList from "./Pages/CharactersList/index.js";
+import CharacterPage from "./Pages/CharacterPage/index.js";
+import CampaignsList from "./Pages/CampaignsList/index.js";
+import CampaignPage from "./Pages/CampaignPage/index.js";
+import ManageInfo from "./Pages/ManageInfo/index.js";
+import CreateNewCharacter from "./Pages/CreateNewCharacter/index.js";
+import ManageCharactersList from "./Pages/ManageCharactersList/index.js";
+import ManageCharacter from "./Pages/ManageCharacter/index.js";
+import CreateNewCampaign from "./Pages/CreateNewCampaign/index.js";
+import ManageCampaignsList from "./Pages/ManageCampaignsList/index.js";
+import ManageCampaign from "./Pages/ManageCampaign/index.js";
+import Login from "./Pages/Login/index.js";
+import DiceRoller from "./Pages/DiceRoller/index.js";
 
 import { Toaster } from "sonner";
 
