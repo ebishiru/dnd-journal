@@ -6,6 +6,8 @@ I thought it'd be nice to have a place online for them to submit to and for the 
 
 It'll be nice for the DM to prep stuff and revisit old memories.
 
+Deployed link: https://dungeonnotesdatabase.vercel.app/
+
 ## Pages Overview:
 
 | Path                  | Page              |
