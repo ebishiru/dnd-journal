@@ -22,7 +22,7 @@ const deleteCampaign = require("./handlers/deleteCampaign");
 const app = express();
 
 app.use(cors({
-    origin: "*",
+    origin: `https://dungeonnotesdatabase.vercel.app/`,
     credentials: true
 }))
 
