@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const { PORT } = process.env
-import cors from "cors";
+const cors = require("cors");
 
 //Handlers
 const signUp = require("./handlers/signUp");
