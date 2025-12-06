@@ -71,7 +71,7 @@ const CreateNewCharacter = () => {
             body
         }
         try {
-            const response = await fetch("/createCharacter", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/createCharacter`, options);
             const data = await response.json();
             if (data.status !== 201) {
                 setStatus("idle");

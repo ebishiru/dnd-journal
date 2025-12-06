@@ -47,7 +47,7 @@ const CreateNewCampaign = () => {
             body
         }
         try {
-            const response = await fetch("/createCampaign", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/createCampaign`, options);
             const data = await response.json();
             if (data.status !== 201) {
                 setStatus("idle");

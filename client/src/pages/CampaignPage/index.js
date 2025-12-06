@@ -12,7 +12,7 @@ const CampaignPage = () => {
     useEffect(() => {
         const fetchCampaign = async () => {
             try {
-                const response = await fetch(`/campaign/${_id}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaign/${_id}`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     setErrorMessage(data.message);

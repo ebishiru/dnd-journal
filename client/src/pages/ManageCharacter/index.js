@@ -30,7 +30,7 @@ const ManageCharacter = () => {
 
         const fetchCharacter = async () => {
             try {
-                const response = await fetch(`/character/${_id}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/character/${_id}`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     toast.error(data.message);
@@ -108,7 +108,7 @@ const ManageCharacter = () => {
             body
         }
         try {
-            const response = await fetch("/editCharacter", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/editCharacter`, options);
             const data = await response.json();
             if (data.status !== 202) {
                 setStatus("idle");
@@ -143,7 +143,7 @@ const ManageCharacter = () => {
             body
         }
         try {
-            const response = await fetch("/character", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/character`, options);
             const data = await response.json();
             if (data.status !== 200) {
                 setDeleteErrorMessage(data.message);

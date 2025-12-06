@@ -22,7 +22,7 @@ const ManageCampaignsList = () => {
 
         const fetchCampaigns = async (ev) => {
             try {
-                const response = await fetch("/campaigns");
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaigns`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     setErrorMessage(data.message);

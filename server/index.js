@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const { PORT } = process.env
+import cors from "cors";
 
 //Handlers
 const signUp = require("./handlers/signUp");
@@ -19,6 +20,11 @@ const editCampaign = require("./handlers/editCampaign");
 const deleteCampaign = require("./handlers/deleteCampaign");
 
 const app = express();
+
+app.use(cors({
+    origin: "*",
+    credentials: true
+}))
 
 app.use(express.json());
 

@@ -22,7 +22,7 @@ const ManageCharactersList = () => {
 
         const fetchCharacters = async (ev) => {
             try {
-                const response = await fetch("/characters");
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/characters`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     setErrorMessage(data.message);

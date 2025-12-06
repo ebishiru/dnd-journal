@@ -12,7 +12,7 @@ const CharacterPage = () => {
     useEffect(() => {
         const fetchCharacter = async () => {
             try {
-                const response = await fetch(`/character/${_id}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/character/${_id}`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     setErrorMessage(data.message);

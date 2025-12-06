@@ -44,7 +44,7 @@ const Login = () => {
             body
         }
         try {
-            const response = await fetch("/login", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/login`, options);
             const data = await response.json();
             if (data.status !=200) {
                 setStatus("idle");
@@ -96,7 +96,7 @@ const Login = () => {
             body
         }
         try {
-            const response = await fetch("/signup", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/signup`, options);
             const data = await response.json();
             if (data.status !=200) {
                 setStatus("idle");

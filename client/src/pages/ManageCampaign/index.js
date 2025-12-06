@@ -29,7 +29,7 @@ const ManageCampaign = () => {
 
         const fetchCampaign = async () => {
             try {
-                const response = await fetch(`/campaign/${_id}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaign/${_id}`);
                 const data = await response.json();
                 if (data.status !== 200) {
                     toast.error(data.message);
@@ -78,7 +78,7 @@ const ManageCampaign = () => {
             body
         }
         try {
-            const response = await fetch("/editCampaign", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/editCampaign`, options);
             const data = await response.json();
             if (data.status !== 202) {
                 setStatus("idle");
@@ -111,7 +111,7 @@ const ManageCampaign = () => {
             body
         }
         try {
-            const response = await fetch("/campaign", options);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaign`, options);
             const data = await response.json();
             if (data.status !== 200) {
                 setDeleteErrorMessage(data.message);
