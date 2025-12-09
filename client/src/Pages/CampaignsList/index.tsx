@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 
-const CampaignsList = () => {
-    const [ allCampaigns, setAllCampaigns ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
+type Campaign = {
+    _id: string,
+    title: string,
+    author: string,
+    createdAt: string,
+}
 
+const CampaignsList = () => {
+    const [ allCampaigns, setAllCampaigns ] = useState<Campaign[] | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
     const [ sortTitleAsc, setSortTitleAsc ] = useState(true);
     const [ sortAuthorAsc, setSortAuthorAsc ] = useState(true);
     const [ sortDateAsc, setSortDateAsc ] = useState(true);
 
     useEffect(() => {
-        const fetchCampaigns = async (ev) => {
+        const fetchCampaigns = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaigns`);
                 const data = await response.json();
@@ -21,16 +26,16 @@ const CampaignsList = () => {
                 } else {
                     setAllCampaigns(data.data);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
-
         fetchCampaigns();
     },[])
 
     //Sorting handlers
     const handleSortByTitle = () => {
+        if (!allCampaigns) return;
         const sorted = [...allCampaigns].sort((a, b) => {
             return sortTitleAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
         });
@@ -39,6 +44,7 @@ const CampaignsList = () => {
     }
 
     const handleSortByAuthor = () => {
+        if (!allCampaigns) return;
         const sorted = [...allCampaigns].sort((a, b) => {
             return sortAuthorAsc ? a.author.localeCompare(b.author) : b.author.localeCompare(a.author);
         });
@@ -46,15 +52,16 @@ const CampaignsList = () => {
         setSortAuthorAsc(!sortAuthorAsc);
     }
 
-    const parseDDMMYYYY = (dateString) => {
+    const parseDDMMYYYY = (dateString: string) => {
         const [ day, month, year] =dateString.split("/").map(Number);
         return new Date(year, month - 1, day);
     }
 
     const handleSortByDate = () => {
+        if (!allCampaigns) return;
         const sorted = [...allCampaigns].sort((a, b) => {
-            const dateA = parseDDMMYYYY(a.createdAt);
-            const dateB = parseDDMMYYYY(b.createdAt);
+            const dateA = parseDDMMYYYY(a.createdAt).getTime();
+            const dateB = parseDDMMYYYY(b.createdAt).getTime();
             return sortDateAsc ? dateA - dateB : dateB - dateA;
         });
         setAllCampaigns(sorted);
@@ -122,7 +129,6 @@ const HeaderRow = styled.div`
         margin-left: 0.25rem;
     }
 `
-
 const CampaignRow = styled.div`
     display: grid;
     grid-template-columns: 5fr 2fr 2fr;
