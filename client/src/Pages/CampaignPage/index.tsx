@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const CampaignPage = () => {
-    const { _id } = useParams();
+type Campaign = {
+    title: string,
+    author: string,
+    createdAt: string,
+    lastEdit: string,
+    story: string,
+}
 
-    const [ campaign, setCampaign ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
+const CampaignPage = () => {
+    const { _id } = useParams<string>();
+    const [ campaign, setCampaign ] = useState<Campaign | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCampaign = async () => {
@@ -19,7 +25,7 @@ const CampaignPage = () => {
                 } else {
                     setCampaign(data.data);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }

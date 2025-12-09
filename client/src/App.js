@@ -5,7 +5,7 @@ import Home from "./Pages/Home/index.js";
 import CharactersList from "./Pages/CharactersList/index.js";
 import CharacterPage from "./Pages/CharacterPage/index.tsx";
 import CampaignsList from "./Pages/CampaignsList/index.js";
-import CampaignPage from "./Pages/CampaignPage/index.js";
+import CampaignPage from "./Pages/CampaignPage/index.tsx";
 import ManageInfo from "./Pages/ManageInfo/index.js";
 import CreateNewCharacter from "./Pages/CreateNewCharacter/index.js";
 import ManageCharactersList from "./Pages/ManageCharactersList/index.js";
