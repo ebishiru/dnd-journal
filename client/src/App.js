@@ -3,7 +3,7 @@ import Header from "./Components/Header/index.tsx";
 import { PageWrapper } from "./Components/PageWrapper/index.tsx";
 import Home from "./Pages/Home/index.js";
 import CharactersList from "./Pages/CharactersList/index.js";
-import CharacterPage from "./Pages/CharacterPage/index.js";
+import CharacterPage from "./Pages/CharacterPage/index.tsx";
 import CampaignsList from "./Pages/CampaignsList/index.js";
 import CampaignPage from "./Pages/CampaignPage/index.js";
 import ManageInfo from "./Pages/ManageInfo/index.js";
