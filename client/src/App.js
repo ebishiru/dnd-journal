@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import Header from "./Components/Header";
+import Header from "./Components/Header/index.tsx";
 import { PageWrapper } from "./Components/PageWrapper";
 import Home from "./Pages/Home/index.js";
 import CharactersList from "./Pages/CharactersList/index.js";
