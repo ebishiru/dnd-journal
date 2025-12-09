@@ -1,5 +1,5 @@
 
-import { CurrentUserContext } from "../../Context/CurrentUserContext";
+import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
 import { useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 

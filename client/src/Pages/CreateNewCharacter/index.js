@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { CurrentUserContext } from "../../Context/CurrentUserContext";
+import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
 
 import styled from "styled-components";
 
