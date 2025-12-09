@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
 import styled from "styled-components";
 
-const CharacterPage = () => {
-    const { _id } = useParams();
+type Character = {
+    _id: string,
+    name: string,
+    author: string,
+    createdAt: string,
+    lastEdit: string,
+    story: string,
+    quotes: string[],
+};
+type Params = {
+    _id: string;
+}
 
-    const [ character, setCharacter ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
+const CharacterPage = () => {
+    const { _id } = useParams<Params>();
+    const [ character, setCharacter ] = useState<Character | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCharacter = async () => {
@@ -19,11 +30,10 @@ const CharacterPage = () => {
                 } else {
                     setCharacter(data.data);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
-
         fetchCharacter();
     }, [_id])
 
@@ -34,14 +44,12 @@ const CharacterPage = () => {
             )
         } else {
             return (
-            <LoadingContainer>
-                <img src="/fire.gif" />
-                <p>Loading...</p>
-            </LoadingContainer>
-            
-        )
+                <LoadingContainer>
+                    <img src="/fire.gif" />
+                    <p>Loading...</p>
+                </LoadingContainer>
+            )
         }
-        
     }
 
     return (

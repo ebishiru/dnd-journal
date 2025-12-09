@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Header from "./Components/Header/index.tsx";
-import { PageWrapper } from "./Components/PageWrapper";
+import { PageWrapper } from "./Components/PageWrapper/index.tsx";
 import Home from "./Pages/Home/index.js";
 import CharactersList from "./Pages/CharactersList/index.js";
 import CharacterPage from "./Pages/CharacterPage/index.js";
