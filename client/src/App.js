@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Header from "./Components/Header/index.tsx";
 import { PageWrapper } from "./Components/PageWrapper/index.tsx";
 import Home from "./Pages/Home/index.js";
-import CharactersList from "./Pages/CharactersList/index.js";
+import CharactersList from "./Pages/CharactersList/index.tsx";
 import CharacterPage from "./Pages/CharacterPage/index.tsx";
-import CampaignsList from "./Pages/CampaignsList/index.js";
+import CampaignsList from "./Pages/CampaignsList/index.tsx";
 import CampaignPage from "./Pages/CampaignPage/index.tsx";
 import ManageInfo from "./Pages/ManageInfo/index.js";
 import CreateNewCharacter from "./Pages/CreateNewCharacter/index.js";

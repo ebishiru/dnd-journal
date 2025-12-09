@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 
-const CharactersList = () => {
-    const [ allCharacters, setAllCharacters ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
+type Character = {
+    _id: string,
+    name: string,
+    author: string,
+    createdAt: string,
+}
 
+const CharactersList = () => {
+    const [ allCharacters, setAllCharacters ] = useState<Character[] | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
     const [ sortNameAsc, setSortNameAsc ] = useState(true);
     const [ sortAuthorAsc, setSortAuthorAsc ] = useState(true);
     const [ sortDateAsc, setSortDateAsc ] = useState(true);
 
-
     useEffect(() => {
-        const fetchCharacters = async (ev) => {
+        const fetchCharacters = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/characters`);
                 const data = await response.json();
@@ -22,16 +26,16 @@ const CharactersList = () => {
                 } else {
                     setAllCharacters(data.data);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
-
         fetchCharacters();
     }, [])
 
     //Sorting handlers
     const handleSortByName = () => {
+        if (!allCharacters) return;
         const sorted = [...allCharacters].sort((a, b) => {
             return sortNameAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
         });
@@ -40,6 +44,7 @@ const CharactersList = () => {
     }
 
     const handleSortByAuthor = () => {
+        if (!allCharacters) return;
         const sorted = [...allCharacters].sort((a, b) => {
             return sortAuthorAsc ? a.author.localeCompare(b.author) : b.author.localeCompare(a.author);
         });
@@ -47,15 +52,16 @@ const CharactersList = () => {
         setSortAuthorAsc(!sortAuthorAsc);
     }
 
-    const parseDDMMYYYY = (dateString) => {
+    const parseDDMMYYYY = (dateString: string) => {
         const [ day, month, year] =dateString.split("/").map(Number);
         return new Date(year, month - 1, day);
     }
 
     const handleSortByDate = () => {
+        if (!allCharacters) return;
         const sorted = [...allCharacters].sort((a, b) => {
-            const dateA = parseDDMMYYYY(a.createdAt);
-            const dateB = parseDDMMYYYY(b.createdAt);
+            const dateA = parseDDMMYYYY(a.createdAt).getTime();
+            const dateB = parseDDMMYYYY(b.createdAt).getTime();
             return sortDateAsc ? dateA - dateB : dateB - dateA;
         });
         setAllCharacters(sorted);
