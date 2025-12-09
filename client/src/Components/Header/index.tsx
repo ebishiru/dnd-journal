@@ -2,6 +2,10 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 
 import styled from "styled-components";
 
+type TitleTextProps = {
+    $isHome: Boolean;
+}
+
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,7 +46,7 @@ const HeaderContainer = styled.div`
         transform: scale(0.9);
     }
 `
-const TitleText = styled.p`
+const TitleText = styled.p<TitleTextProps>`
     font-size: ${(props) => (props.$isHome ? "1.6rem" : "1.3rem")};
     font-weight: bold;
 `
