@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import CurrentUserProvider from "./Context/CurrentUserContext";
+import CurrentUserProvider from "./Context/CurrentUserContext.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
