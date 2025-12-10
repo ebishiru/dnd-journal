@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import styled from "styled-components";
 
 //Audio files
@@ -18,36 +17,34 @@ import high4 from "../../Audio/high4.mp3";
 //Confetti
 import confetti from "canvas-confetti";
 
+type DiceHistory = {
+    value: number;
+    die: number;
+}
+
 const DiceRoller = () => {
-    const [ dieResult, setDieResult ] = useState(null);
-    const [ dieIsRolling, setDieIsRolling ] = useState(false);
-    const [ temporaryDie, setTemporaryDie ] = useState(null);
-
+    const [ dieResult, setDieResult ] = useState<number | null>(null);
+    const [ dieIsRolling, setDieIsRolling ] = useState<boolean>(false);
+    const [ temporaryDie, setTemporaryDie ] = useState<number | null>(null);
     //dice modifications
-    const [ dieMaxValue, setDieMaxValue ] = useState(20);
-    const [ selectedDie, setSelectedDie ] = useState(20);
-
+    const [ dieMaxValue, setDieMaxValue ] = useState<number>(20);
+    const [ selectedDie, setSelectedDie ] = useState<number>(20);
     //dice log
-    const [ diceHistory, setDiceHistory ] = useState([]);
-
+    const [ diceHistory, setDiceHistory ] = useState<DiceHistory[]>([]);
     //Wacky Mode
-    const [ wackyEnabled, setWackyEnabled ] = useState(false);
-    const [ confettiEnabled, setConfettiEnabled ] = useState(false);
+    const [ wackyEnabled, setWackyEnabled ] = useState<boolean>(false);
+    const [ confettiEnabled, setConfettiEnabled ] = useState<boolean>(false);
     const lowSounds = [low1, low2, low3, low4];
     const midSounds = [mid1, mid2, mid3, mid4];
     const highSounds = [high1, high2, high3, high4];
-    const playSound = (type) => {
-        let audioPool;
-
+    const playSound = (type: "low" | "mid" | "high") => {
+        let audioPool: string[] | undefined;
         if (type === "low") audioPool = lowSounds;
         else if (type === "mid") audioPool = midSounds;
         else if (type === "high") audioPool = highSounds;
-
         if (!audioPool) return;
-
         const randomIndex = Math.floor(Math.random() * audioPool.length);
         const audio = new Audio(audioPool[randomIndex]);
-
         audio.volume = 0.8;
         audio.play();
     }
@@ -101,7 +98,7 @@ const DiceRoller = () => {
         }, 1000)
     }
 
-    const changeDie = (chosenDie) => {
+    const changeDie = (chosenDie:number) => {
         setDieMaxValue(chosenDie);
         setSelectedDie(chosenDie);
     }
@@ -156,7 +153,12 @@ const RollingContainer = styled.div`
     align-items: center;
     margin: 2rem 0;
 `
-const RollButton = styled.button`
+type RollButtonProps = {
+    $rollValue: number | null;
+    $maxValue: number;
+}
+
+const RollButton = styled.button<RollButtonProps>`
     font-size: 3.5rem;
     width: 180px;
     height: 180px;
@@ -175,7 +177,10 @@ const DiceContainer = styled.div`
     text-align: center;
     margin: 2rem 0;
 `
-const DieButton = styled.button`
+type DieButtonProps = {
+    selected: boolean;
+}
+const DieButton = styled.button<DieButtonProps>`
     font-size: 1.2rem;
     width: 3rem;
     height: 3rem;
@@ -203,7 +208,6 @@ const DiceHistoryContainer = styled.div`
         color: #6C3483;
     }
 `
-
 const OptionsContainer = styled.div`
     display: flex;
     justify-content: center;
