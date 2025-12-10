@@ -1,13 +1,13 @@
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
 import { useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
 import styled from "styled-components";
 
 const ManageInfo = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
+    const context = useContext(CurrentUserContext);
+    if (!context) return ("CurrentUserContext is null");
+    const [ currentUser, setCurrentUser ] = context;
 
     //ensure user is logged in
     useEffect(() => {
@@ -21,14 +21,12 @@ const ManageInfo = () => {
             <TextContainer>
                 <p>“Welcome back, <span>{currentUser}</span>. The realm has not been the same in your absence."</p>
             </TextContainer>
-            
             <ButtonsContainer>
                 <Link to={"/manage/character/new"}><button>Create New Character</button></Link>
                 <Link to={"/manage/characters"}><button>Manage Existing Character</button></Link>
                 <Link to={"/manage/campaign/new"}><button>Create New Campaign</button></Link>
                 <Link to={"/manage/campaigns"}><button>Manage Existing Campaign</button></Link>
             </ButtonsContainer>
-            
         </>
     )
 }
@@ -45,7 +43,6 @@ const TextContainer = styled.div`
         font-weight: bold;
     }
 `
-
 const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: column;

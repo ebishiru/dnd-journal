@@ -1,25 +1,28 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
+
+type Params = {
+    _id: string,
+}
 
 const ManageCampaign = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const { _id } = useParams();
-    const [ foundCampaign, setFoundCampaign ] = useState(false);
-
-    const [ status, setStatus ] = useState("idle");
-    const [ inputCampaignTitle, setInputCampaignTitle ] = useState("");
-    const [ inputCampaignStory, setInputCampaignStory ] = useState("");
-    const [ errorMessage, setErrorMessage ] = useState(null);
-
-    const [ deleteConfirm, setDeleteConfirm ] = useState(false);
-    const [ deleteErrorMessage, setDeleteErrorMessage ] = useState(null);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
+    const { _id } = useParams<Params>();
+    const [ foundCampaign, setFoundCampaign ] = useState<boolean>(false);
+    const [ status, setStatus ] = useState<"idle" | "processing">("idle");
+    const [ inputCampaignTitle, setInputCampaignTitle ] = useState<string>("");
+    const [ inputCampaignStory, setInputCampaignStory ] = useState<string>("");
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [ deleteConfirm, setDeleteConfirm ] = useState<boolean>(false);
+    const [ deleteErrorMessage, setDeleteErrorMessage ] = useState<string | null>(null);
 
     //Ensure user is logged in
     useEffect(() => {
@@ -43,7 +46,7 @@ const ManageCampaign = () => {
                     setInputCampaignStory(data.data.story);
                     setFoundCampaign(true);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
@@ -53,13 +56,13 @@ const ManageCampaign = () => {
     }, [currentUser, _id, navigate])
 
     //ensure textarea grows with content
-    const autoGrow = (element) => {
+    const autoGrow = (element: HTMLTextAreaElement) => {
         element.style.height = "auto";
         element.style.height = element.scrollHeight + "px";
     }
 
     //Confirm Edit campaign
-    const handleEditCampaign = async (ev) => {
+    const handleEditCampaign = async (ev:React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setErrorMessage(null);
@@ -89,14 +92,14 @@ const ManageCampaign = () => {
                 toast.success(data.message);
                 navigate("/manage");
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
     }
 
     //Delete Campaign handler
-    const handleDeleteCampaign = async (ev) => {
+    const handleDeleteCampaign = async (ev:React.MouseEvent<HTMLButtonElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setDeleteErrorMessage(null);
@@ -122,7 +125,7 @@ const ManageCampaign = () => {
                 toast.success(data.message);
                 navigate("/manage");
             }
-        } catch (error) {
+        } catch (error:any) {
             setStatus("idle");
             toast.error(error.message);
         }
@@ -166,7 +169,6 @@ const ManageCampaign = () => {
 }
 
 export default ManageCampaign;
-
 
 const FormSection = styled.form`
     font-size: 1rem;
