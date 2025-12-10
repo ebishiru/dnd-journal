@@ -1,19 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
-import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
+import { CurrentUserContext } from "../../Context/CurrentUserContext.ts";
 import styled from "styled-components";
 
 const CreateNewCampaign = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
 
     const [ status, setStatus ] = useState("idle");
     const [ inputCampaignTitle, setInputCampaignTitle ] = useState("");
     const [ inputCampaignStory, setInputCampaignStory ] = useState("");
-    const [ errorMessage, setErrorMessage ] = useState(null);
+    const [ errorMessage, setErrorMessage ] = useState<String | null>(null);
 
     //ensure user is logged in
     useEffect(() => {
@@ -23,12 +25,12 @@ const CreateNewCampaign = () => {
     }, [currentUser, navigate])
 
     //ensure textarea grows with content
-    const autoGrow = (element) => {
+    const autoGrow = (element: HTMLTextAreaElement) => {
         element.style.height = "auto";
         element.style.height = element.scrollHeight + "px";
     }
 
-    const handleCreateCampaign = async (ev) => {
+    const handleCreateCampaign = async (ev:React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setErrorMessage(null);
@@ -58,7 +60,7 @@ const CreateNewCampaign = () => {
                 toast.success(data.message);
                 navigate("/manage");
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
