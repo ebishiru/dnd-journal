@@ -1,26 +1,29 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
+
+type Params = {
+    _id: string,
+}
 
 const ManageCharacter = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const { _id } = useParams();
-    const [ foundCharacter, setFoundCharacter ] = useState(false);
-
-    const [ status, setStatus ] = useState("idle");
-    const [ inputCharacterName, setInputCharacterName ] = useState("");
-    const [ inputCharacterStory, setInputCharacterStory ] = useState("");
-    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([""]);
-    const [ errorMessage, setErrorMessage ] = useState(null);
-
-    const [ deleteConfirm, setDeleteConfirm ] = useState(false);
-    const [ deleteErrorMessage, setDeleteErrorMessage ] = useState(null);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
+    const { _id } = useParams<Params>();
+    const [ foundCharacter, setFoundCharacter ] = useState<boolean>(false);
+    const [ status, setStatus ] = useState<"idle" | "processing">("idle");
+    const [ inputCharacterName, setInputCharacterName ] = useState<string>("");
+    const [ inputCharacterStory, setInputCharacterStory ] = useState<string>("");
+    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState<string[]>([""]);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [ deleteConfirm, setDeleteConfirm ] = useState<boolean>(false);
+    const [ deleteErrorMessage, setDeleteErrorMessage ] = useState<string | null>(null);
 
     //Ensure user is logged in.
     useEffect(() => {
@@ -45,7 +48,7 @@ const ManageCharacter = () => {
                     setInputCharacterQuotes(data.data.quotes);
                     setFoundCharacter(true);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 toast.error(error.message);
             }
         }
@@ -55,7 +58,7 @@ const ManageCharacter = () => {
     }, [currentUser, _id, navigate])
 
     //ensure textarea grows with content
-    const autoGrow = (element) => {
+    const autoGrow = (element: HTMLTextAreaElement) => {
         element.style.height = "auto";
         element.style.height = element.scrollHeight + "px";
     }
@@ -81,14 +84,14 @@ const ManageCharacter = () => {
     }
 
     //Ensure all quote inputs are in one array
-    const handleInputCharacterQuoteChange = (index, newValue) => {
+    const handleInputCharacterQuoteChange = (index: number, newValue: string) => {
         const updatedQuotes = [...inputCharacterQuotes];
         updatedQuotes[index] = newValue;
         setInputCharacterQuotes(updatedQuotes);
     }
 
     //Confirm edit character
-    const handleEditCharacter = async (ev) => {
+    const handleEditCharacter = async (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setErrorMessage(null);
@@ -119,14 +122,14 @@ const ManageCharacter = () => {
                 toast.success(data.message);
                 navigate("/manage")
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
     }
 
     //Confirm delete character
-    const handleDeleteCharacter = async (ev) => {
+    const handleDeleteCharacter = async (ev: React.MouseEvent<HTMLButtonElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setDeleteErrorMessage(null);
@@ -154,7 +157,7 @@ const ManageCharacter = () => {
                 toast.success(data.message);
                 navigate("/manage");
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
@@ -215,7 +218,6 @@ const ManageCharacter = () => {
 }
 
 export default ManageCharacter;
-
 
 const FormSection = styled.form`
     font-size: 1rem;

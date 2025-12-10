@@ -9,7 +9,7 @@ import CampaignPage from "./Pages/CampaignPage/index.tsx";
 import ManageInfo from "./Pages/ManageInfo/index.tsx";
 import CreateNewCharacter from "./Pages/CreateNewCharacter/index.tsx";
 import ManageCharactersList from "./Pages/ManageCharactersList/index.tsx";
-import ManageCharacter from "./Pages/ManageCharacter/index.js";
+import ManageCharacter from "./Pages/ManageCharacter/index.tsx";
 import CreateNewCampaign from "./Pages/CreateNewCampaign/index.tsx";
 import ManageCampaignsList from "./Pages/ManageCampaignsList/index.tsx";
 import ManageCampaign from "./Pages/ManageCampaign/index.tsx";
