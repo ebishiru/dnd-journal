@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
 import { useContext } from "react";
-
 import styled from "styled-components";
 
 const Home = () => {
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error ("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
 
     const handleLogOut = () => {
         setCurrentUser(null);
@@ -48,7 +50,6 @@ const TextContainer = styled.div`
         font-weight: bold;
     }
 `
-
 const ButtonsContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -66,9 +67,7 @@ const ButtonsContainer = styled.div`
     button:active {
         transform: scale(0.9);
     }
-    
 `
-
 const Footer = styled.div`
     position: fixed;
     bottom: 0;
