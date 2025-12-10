@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Header from "./Components/Header/index.tsx";
 import { PageWrapper } from "./Components/PageWrapper/index.tsx";
-import Home from "./Pages/Home/index.js";
+import Home from "./Pages/Home/index.tsx";
 import CharactersList from "./Pages/CharactersList/index.tsx";
 import CharacterPage from "./Pages/CharacterPage/index.tsx";
 import CampaignsList from "./Pages/CampaignsList/index.tsx";
 import CampaignPage from "./Pages/CampaignPage/index.tsx";
 import ManageInfo from "./Pages/ManageInfo/index.js";
 import CreateNewCharacter from "./Pages/CreateNewCharacter/index.js";
-import ManageCharactersList from "./Pages/ManageCharactersList/index.js";
+import ManageCharactersList from "./Pages/ManageCharactersList/index.tsx";
 import ManageCharacter from "./Pages/ManageCharacter/index.js";
 import CreateNewCampaign from "./Pages/CreateNewCampaign/index.js";
-import ManageCampaignsList from "./Pages/ManageCampaignsList/index.js";
+import ManageCampaignsList from "./Pages/ManageCampaignsList/index.tsx";
 import ManageCampaign from "./Pages/ManageCampaign/index.js";
 import Login from "./Pages/Login/index.js";
 import DiceRoller from "./Pages/DiceRoller/index.js";

@@ -1,26 +1,34 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
+
+type Character = {
+    _id: string,
+    name: string,
+    author: string,
+    createdAt: string,
+    lastEdit: string,
+    story: string,
+    quotes: string[],
+}
 
 const ManageCharactersList = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const [ allUserCharacters, setAllUserCharacters ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
-
-    const [ sortNameAsc, setSortNameAsc ] = useState(true);
-    const [ sortDateAsc, setSortDateAsc ] = useState(true);
+    const context = useContext(CurrentUserContext);
+    if (!context) return ("CurrentUserContext is null");
+    const [ currentUser, setCurrentUser ] = context;
+    const [ allUserCharacters, setAllUserCharacters ] = useState<Character[] | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [ sortNameAsc, setSortNameAsc ] = useState<boolean>(true);
+    const [ sortDateAsc, setSortDateAsc ] = useState<boolean>(true);
 
     useEffect(() => {
         if (!currentUser) {
             navigate("/");
         }
 
-        const fetchCharacters = async (ev) => {
+        const fetchCharacters = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/characters`);
                 const data = await response.json();
@@ -28,22 +36,21 @@ const ManageCharactersList = () => {
                     setErrorMessage(data.message);
                 } else {
                     //only keep characters that are created by the user
-                    const userCharacters = data.data.filter((character) => {
+                    const userCharacters = data.data.filter((character: Character) => {
                         return character.author === currentUser
                     });
                     setAllUserCharacters(userCharacters);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
-
         fetchCharacters();
-
     },[currentUser])
 
     //Sorting handlers
     const handleSortByName = () => {
+        if (!allUserCharacters) return;
         const sorted = [...allUserCharacters].sort((a, b) => {
             return sortNameAsc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
         });
@@ -51,15 +58,16 @@ const ManageCharactersList = () => {
         setSortNameAsc(!sortNameAsc);
     }
 
-    const parseDDMMYYYY = (dateString) => {
+    const parseDDMMYYYY = (dateString: string) => {
         const [ day, month, year] =dateString.split("/").map(Number);
         return new Date(year, month - 1, day);
     }
 
     const handleSortByDate = () => {
+        if (!allUserCharacters) return;
         const sorted = [...allUserCharacters].sort((a, b) => {
-            const dateA = parseDDMMYYYY(a.createdAt);
-            const dateB = parseDDMMYYYY(b.createdAt);
+            const dateA = parseDDMMYYYY(a.createdAt).getTime();
+            const dateB = parseDDMMYYYY(b.createdAt).getTime();
             return sortDateAsc ? dateA - dateB : dateB - dateA;
         });
         setAllUserCharacters(sorted);
@@ -109,7 +117,6 @@ const LoadingContainer = styled.div`
         font-weight: bold;
     }
 `
-
 const HeaderRow = styled.div`
     display: grid;
     grid-template-columns: 7fr 2fr;

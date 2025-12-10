@@ -1,26 +1,33 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
+
+type Campaign = {
+    _id: string,
+    title: string,
+    author: string,
+    createdAt: string,
+    lastEdit: string,
+}
 
 const ManageCampaignsList = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const [ allUserCampaigns, setAllUserCampaigns ] = useState(null);
-    const [ errorMessage, setErrorMessage ] = useState(null);
-
-    const [ sortTitleAsc, setSortTitleAsc ] = useState(true);
-    const [ sortDateAsc, setSortDateAsc ] = useState(true);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error ("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
+    const [ allUserCampaigns, setAllUserCampaigns ] = useState<Campaign[] | null>(null);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [ sortTitleAsc, setSortTitleAsc ] = useState<boolean>(true);
+    const [ sortDateAsc, setSortDateAsc ] = useState<boolean>(true);
 
     useEffect(() => {
         if (!currentUser) {
             navigate("/");
         }
-
-        const fetchCampaigns = async (ev) => {
+        const fetchCampaigns = async () => {
             try {
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/campaigns`);
                 const data = await response.json();
@@ -28,21 +35,21 @@ const ManageCampaignsList = () => {
                     setErrorMessage(data.message);
                 } else {
                     //only keep campaigns made by user
-                    const userCampaigns = data.data.filter((campaign) => {
+                    const userCampaigns = data.data.filter((campaign: Campaign) => {
                         return campaign.author === currentUser
                     });
                     setAllUserCampaigns(userCampaigns);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 setErrorMessage(error.message);
             }
         }
-
         fetchCampaigns();
     },[currentUser])
 
     //Sorting handlers
     const handleSortByTitle = () => {
+        if (!allUserCampaigns) return;
         const sorted = [...allUserCampaigns].sort((a, b) => {
             return sortTitleAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
         });
@@ -50,15 +57,16 @@ const ManageCampaignsList = () => {
         setSortTitleAsc(!sortTitleAsc);
     }
 
-    const parseDDMMYYYY = (dateString) => {
+    const parseDDMMYYYY = (dateString: string) => {
         const [ day, month, year] =dateString.split("/").map(Number);
         return new Date(year, month - 1, day);
     }
 
     const handleSortByDate = () => {
+        if (!allUserCampaigns) return;
         const sorted = [...allUserCampaigns].sort((a, b) => {
-            const dateA = parseDDMMYYYY(a.createdAt);
-            const dateB = parseDDMMYYYY(b.createdAt);
+            const dateA = parseDDMMYYYY(a.createdAt).getTime();
+            const dateB = parseDDMMYYYY(b.createdAt).getTime();
             return sortDateAsc ? dateA - dateB : dateB - dateA;
         });
         setAllUserCampaigns(sorted);
@@ -107,7 +115,6 @@ const LoadingContainer = styled.div`
         font-weight: bold;
     }
 `
-
 const HeaderRow = styled.div`
     display: grid;
     grid-template-columns: 7fr 2fr;
@@ -125,7 +132,6 @@ const HeaderRow = styled.div`
         margin-left: 0.25rem;
     }
 `
-
 const CharacterRow = styled.div`
     display: grid;
     grid-template-columns: 7fr 2fr;
