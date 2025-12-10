@@ -1,20 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
 
 const CreateNewCharacter = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const [ status, setStatus ] = useState("idle");
-    const [ inputCharacterName, setInputCharacterName ] = useState("");
-    const [ inputCharacterStory, setInputCharacterStory ] = useState("");
-    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState([""]);
-    const [ errorMessage, setErrorMessage ] = useState(null);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error ("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
+    const [ status, setStatus ] = useState<"idle" | "processing">("idle");
+    const [ inputCharacterName, setInputCharacterName ] = useState<string>("");
+    const [ inputCharacterStory, setInputCharacterStory ] = useState<string>("");
+    const [ inputCharacterQuotes, setInputCharacterQuotes ] = useState<string[]>([""]);
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
 
     //ensure user is logged in
     useEffect(() => {
@@ -24,7 +25,7 @@ const CreateNewCharacter = () => {
     }, [currentUser, navigate])
 
     //ensure textarea grows with content
-    const autoGrow = (element) => {
+    const autoGrow = (element: HTMLTextAreaElement) => {
         element.style.height = "auto";
         element.style.height = element.scrollHeight + "px";
     }
@@ -45,13 +46,13 @@ const CreateNewCharacter = () => {
         setInputCharacterQuotes(inputCharacterQuotes.slice(0,-1));
     }
 
-    const handleInputCharacterQuoteChange = (index, newValue) => {
+    const handleInputCharacterQuoteChange = (index:number, newValue:string) => {
         const updatedQuotes = [...inputCharacterQuotes];
         updatedQuotes[index] = newValue;
         setInputCharacterQuotes(updatedQuotes);
     }
 
-    const handleCreateCharacter = async (ev) => {
+    const handleCreateCharacter = async (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         setStatus("processing");
         setErrorMessage(null);
@@ -82,13 +83,11 @@ const CreateNewCharacter = () => {
                 toast.success(data.message);
                 navigate("/manage")
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
     }
-
-
     
     return (
         <>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { CurrentUserContext } from "../../Context/CurrentUserContext.ts";
+import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
 import styled from "styled-components";
 
 const CreateNewCampaign = () => {
@@ -12,10 +12,10 @@ const CreateNewCampaign = () => {
     }
     const [ currentUser, setCurrentUser ] = context;
 
-    const [ status, setStatus ] = useState("idle");
-    const [ inputCampaignTitle, setInputCampaignTitle ] = useState("");
-    const [ inputCampaignStory, setInputCampaignStory ] = useState("");
-    const [ errorMessage, setErrorMessage ] = useState<String | null>(null);
+    const [ status, setStatus ] = useState<"idle" | "processing">("idle");
+    const [ inputCampaignTitle, setInputCampaignTitle ] = useState<string>("");
+    const [ inputCampaignStory, setInputCampaignStory ] = useState<string>("");
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
 
     //ensure user is logged in
     useEffect(() => {
