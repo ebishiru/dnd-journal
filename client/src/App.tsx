@@ -13,7 +13,7 @@ import ManageCharacter from "./Pages/ManageCharacter/index.tsx";
 import CreateNewCampaign from "./Pages/CreateNewCampaign/index.tsx";
 import ManageCampaignsList from "./Pages/ManageCampaignsList/index.tsx";
 import ManageCampaign from "./Pages/ManageCampaign/index.tsx";
-import Login from "./Pages/Login/index.js";
+import Login from "./Pages/Login/index.tsx";
 import DiceRoller from "./Pages/DiceRoller/index.tsx";
 
 import { Toaster } from "sonner";

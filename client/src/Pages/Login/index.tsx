@@ -1,24 +1,24 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
 import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
-
 import styled from "styled-components";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [ currentUser, setCurrentUser ] = useContext(CurrentUserContext);
-
-    const [ status, setStatus ] = useState("idle");
-    const [ inputUsername, setInputUsername ] = useState("");
-    const [ inputPassword, setInputPassword ] = useState("");
-    const [ errorMessage, setErrorMessage ] = useState(null);
-
-    const [ inputSignUsername, setInputSignUsername ] = useState("");
-    const [ inputSignPassword, setInputSignPassword ] = useState("");
-    const [ inputConfirmPassword, setInputConfirmPassword ] = useState("");
-    const [ errorSignMessage, setErrorSignMessage ] = useState(null);
+    const context = useContext(CurrentUserContext);
+    if (!context) {
+        throw new Error ("CurrentUserContext is null");
+    }
+    const [ currentUser, setCurrentUser ] = context;
+    const [ status, setStatus ] = useState<"idle" | "processing">("idle");
+    const [ inputUsername, setInputUsername ] = useState<string>("");
+    const [ inputPassword, setInputPassword ] = useState<string>("");
+    const [ errorMessage, setErrorMessage ] = useState<string | null>(null);
+    const [ inputSignUsername, setInputSignUsername ] = useState<string>("");
+    const [ inputSignPassword, setInputSignPassword ] = useState<string>("");
+    const [ inputConfirmPassword, setInputConfirmPassword ] = useState<string>("");
+    const [ errorSignMessage, setErrorSignMessage ] = useState<string | null>(null);
 
     useEffect(() => {
         if (currentUser) {
@@ -26,9 +26,9 @@ const Login = () => {
         }
     }, [currentUser, navigate])
 
-    const handleLogIn = async (ev) => {
+    const handleLogIn = async (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
-        setStatus("logging");
+        setStatus("processing");
         setErrorMessage(null);
         const logInData = {
             username: inputUsername,
@@ -57,13 +57,13 @@ const Login = () => {
                 setInputPassword("");
                 toast.success(data.message);
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
     }
 
-    const handleSignUp = async (ev) => {
+    const handleSignUp = async (ev: React.FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         setErrorSignMessage(null);
         //Ensure username is less than 16chars.
@@ -72,7 +72,6 @@ const Login = () => {
             setInputSignUsername("");
             return;
         }
-
         //Verify password and confirm password matches on FE.
         if (inputSignPassword !== inputConfirmPassword) {
             setErrorSignMessage("Passwords don't match. Please try again.")
@@ -80,8 +79,7 @@ const Login = () => {
             setInputConfirmPassword("");
             return;
         }
-
-        setStatus("logging");
+        setStatus("processing");
         const signUpData = {
             username: inputSignUsername,
             password: inputSignPassword
@@ -111,7 +109,7 @@ const Login = () => {
                 toast.success(data.message);
                 navigate("/");
             }
-        } catch (error) {
+        } catch (error: any) {
             setStatus("idle");
             toast.error(error.message);
         }
@@ -131,7 +129,7 @@ const Login = () => {
                         <input type="password" id="password" value={inputPassword} onChange={(ev)=>{setInputPassword(ev.target.value)}}></input>
                     </div>
                     <div className="buttonRow">
-                        <button type="submit" disabled={!inputUsername || !inputPassword || status === "logging"}>Sign In</button>
+                        <button type="submit" disabled={!inputUsername || !inputPassword || status === "processing"}>Sign In</button>
                     </div>
                     <p className="errorMessage">{errorMessage || ""}</p>
                 </FormSection>
@@ -152,7 +150,7 @@ const Login = () => {
                         <input type="password" id="confirmPassword" value={inputConfirmPassword} onChange={(ev)=>{setInputConfirmPassword(ev.target.value)}}></input>
                     </div>
                     <div className="buttonRow">
-                        <button type="submit" disabled={!inputSignUsername || !inputSignPassword || !inputConfirmPassword || status === "logging"}>Sign Up</button>
+                        <button type="submit" disabled={!inputSignUsername || !inputSignPassword || !inputConfirmPassword || status === "processing"}>Sign Up</button>
                     </div>
                     <p className="errorMessage">{errorSignMessage || ""}</p>
                 </FormSection>
