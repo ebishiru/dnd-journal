@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import { useContext } from "react";
 import styled from "styled-components";
 

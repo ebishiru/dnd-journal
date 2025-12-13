@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import CurrentUserProvider from "./Context/CurrentUserContext.tsx";
+import App from "./App";
+import CurrentUserProvider from "./Context/CurrentUserContext";
 
 const rootElement = document.getElementById("root");
 if(!rootElement) {

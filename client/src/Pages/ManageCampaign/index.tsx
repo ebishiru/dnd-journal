@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import styled from "styled-components";
 
 type Params = {

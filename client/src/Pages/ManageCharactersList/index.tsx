@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { CurrentUserContext } from "../../Context/CurrentUserContext.tsx";
+import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import styled from "styled-components";
 
 type Character = {

@@ -1,20 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import Header from "./Components/Header/index.tsx";
-import { PageWrapper } from "./Components/PageWrapper/index.tsx";
-import Home from "./Pages/Home/index.tsx";
-import CharactersList from "./Pages/CharactersList/index.tsx";
-import CharacterPage from "./Pages/CharacterPage/index.tsx";
-import CampaignsList from "./Pages/CampaignsList/index.tsx";
-import CampaignPage from "./Pages/CampaignPage/index.tsx";
-import ManageInfo from "./Pages/ManageInfo/index.tsx";
-import CreateNewCharacter from "./Pages/CreateNewCharacter/index.tsx";
-import ManageCharactersList from "./Pages/ManageCharactersList/index.tsx";
-import ManageCharacter from "./Pages/ManageCharacter/index.tsx";
-import CreateNewCampaign from "./Pages/CreateNewCampaign/index.tsx";
-import ManageCampaignsList from "./Pages/ManageCampaignsList/index.tsx";
-import ManageCampaign from "./Pages/ManageCampaign/index.tsx";
-import Login from "./Pages/Login/index.tsx";
-import DiceRoller from "./Pages/DiceRoller/index.tsx";
+import Header from "./Components/Header/index";
+import { PageWrapper } from "./Components/PageWrapper/index";
+import Home from "./Pages/Home/index";
+import CharactersList from "./Pages/CharactersList/index";
+import CharacterPage from "./Pages/CharacterPage/index";
+import CampaignsList from "./Pages/CampaignsList/index";
+import CampaignPage from "./Pages/CampaignPage/index";
+import ManageInfo from "./Pages/ManageInfo/index";
+import CreateNewCharacter from "./Pages/CreateNewCharacter/index";
+import ManageCharactersList from "./Pages/ManageCharactersList/index";
+import ManageCharacter from "./Pages/ManageCharacter/index";
+import CreateNewCampaign from "./Pages/CreateNewCampaign/index";
+import ManageCampaignsList from "./Pages/ManageCampaignsList/index";
+import ManageCampaign from "./Pages/ManageCampaign/index";
+import Login from "./Pages/Login/index";
+import DiceRoller from "./Pages/DiceRoller/index";
 
 import { Toaster } from "sonner";
 
