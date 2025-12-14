@@ -1,4 +1,4 @@
-import { getByTestId, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Home from "../Home/index";
 import { CurrentUserContext } from "../../Context/CurrentUserContext";
 import { BrowserRouter } from "react-router-dom";
