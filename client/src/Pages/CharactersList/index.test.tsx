@@ -8,8 +8,7 @@ test("Loading animation renders", () => {
     
     expect(screen.getByText("Loading...")).toBeInTheDocument();
     expect(screen.getByRole("img")).toHaveAttribute("src", "/fire.gif");
-    }
-)
+})
 
 //initialize mock fetch for Characters Data
 const mockCharacters = [
