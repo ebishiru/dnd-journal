@@ -40,7 +40,10 @@ const CampaignPage = () => {
             )
         } else {
             return (
-                <p>Loading Campaign...</p>
+                <LoadingContainer>
+                    <img src="/fire.gif" />
+                    <p>Loading...</p>
+                </LoadingContainer>
             )
         }
     }
@@ -62,6 +65,17 @@ const CampaignPage = () => {
 
 export default CampaignPage;
 
+const LoadingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    gap: 1rem;
+    p {
+        font-weight: bold;
+    }
+`
 const CampaignTitle = styled.p`
     font-size: 2rem;
     font-weight: bold;
