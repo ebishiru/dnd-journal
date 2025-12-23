@@ -99,8 +99,11 @@ test("Campaign can be deleted", async () => {
     renderComponent("Iroh");
     await screen.findByLabelText(/title/i);
     const deleteConfirmCheckBox = screen.getByRole("checkbox", {name: /i understand/i});
-    await userEvent.click(deleteConfirmCheckBox);
     const deleteCampaignButton = screen.getByRole("button", {name: /delete campaign/i});
+
+    expect(deleteCampaignButton).toBeDisabled();
+
+    await userEvent.click(deleteConfirmCheckBox);
     await userEvent.click(deleteCampaignButton);
     
     expect(global.fetch).toHaveBeenCalled();

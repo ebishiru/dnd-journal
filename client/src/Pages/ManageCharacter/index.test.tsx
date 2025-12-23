@@ -112,8 +112,11 @@ test("Character can be deleted", async () => {
     renderComponent("Hopper");
     await screen.findByLabelText(/name/i);
     const deleteConfirmCheckBox = screen.getByRole("checkbox", {name: /i understand/i});
-    await userEvent.click(deleteConfirmCheckBox);
     const deleteCharacterButton = screen.getByRole("button", {name: /delete character/i});
+
+    expect(deleteCharacterButton).toBeDisabled();
+    
+    await userEvent.click(deleteConfirmCheckBox);
     await userEvent.click(deleteCharacterButton);
     
     expect(global.fetch).toHaveBeenCalled();
