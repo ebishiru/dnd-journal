@@ -38,7 +38,12 @@ jest.mock("sonner", () => ({
 
 beforeEach(() => {
     jest.clearAllMocks();
-    global.fetch = jest.fn();
+    global.fetch = jest.fn(async() => ({
+        json: async () => ({
+            status: 200,
+            data: mockCharacter,
+        }),
+    })) as jest.Mock;
 })
 
 test("User gets redirected if not logged in", async () => {
@@ -46,9 +51,46 @@ test("User gets redirected if not logged in", async () => {
     expect(await screen.findByText("Home Page")).toBeInTheDocument();
 })
 
-test("Form renders when logged in", () => {
+test("Form renders when logged in", async () => {
     renderComponent("Hopper");
-    expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+    await screen.findByLabelText(/name/i);
     expect(screen.getByLabelText(/story/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /create character/i})).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /save changes/i})).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /delete character/i})).toBeInTheDocument();
+})
+
+test("Quotes can be added and removed.", async () => {
+    renderComponent("Hopper");
+    await screen.findByText(/Add more quotes/i);
+    const addQuoteButton = screen.getByRole("button", {name: /add more quotes/i});
+    const removeQuoteButton = screen.getByRole("button", {name: /remove last quote/i});
+    await userEvent.click(addQuoteButton);
+    expect(await screen.findByLabelText(/3/)).toBeInTheDocument();
+    await userEvent.click(removeQuoteButton);
+    expect(screen.queryByLabelText(/3/)).not.toBeInTheDocument();
+})
+
+test("Character changes is saved successfully", async () => {
+    global.fetch = jest.fn()
+    .mockResolvedValueOnce({
+        json: async () => ({
+            status: 200,
+            data: mockCharacter,
+        }),
+    })
+    .mockResolvedValueOnce({
+        json: async () => ({
+            status: 202,
+            message: "Character successfully updated.",
+        }),
+    }) as jest.Mock;
+    renderComponent("Hopper");
+    await screen.findByLabelText(/name/i);
+    await userEvent.type(screen.getByLabelText(/story/i), "She saved Hawkins.");
+    const saveChangesButton = screen.getByRole("button", {name: /save changes/i});
+    await userEvent.click(saveChangesButton);
+
+    expect(global.fetch).toHaveBeenCalled();
+    expect(toast.success).toHaveBeenCalledWith("Character successfully updated.");
+    expect(toast.error).not.toHaveBeenCalled();
 })
