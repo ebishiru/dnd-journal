@@ -81,3 +81,29 @@ test("Campaign can be editted and saved", async () => {
     expect(toast.success).toHaveBeenCalledWith("Campaign successfully updated.");
     expect(toast.error).not.toHaveBeenCalled();
 })
+
+test("Campaign can be deleted", async () => {
+    global.fetch = jest.fn()
+    .mockResolvedValueOnce({
+        json: async() => ({
+            status: 200,
+            data: mockCampaign,
+        }),
+    })
+    .mockResolvedValueOnce({
+        json: async () => ({
+            status: 200,
+            message: "Campaign successfully deleted.",
+        }),
+    }) as jest.Mock;
+    renderComponent("Iroh");
+    await screen.findByLabelText(/title/i);
+    const deleteConfirmCheckBox = screen.getByRole("checkbox", {name: /i understand/i});
+    await userEvent.click(deleteConfirmCheckBox);
+    const deleteCampaignButton = screen.getByRole("button", {name: /delete campaign/i});
+    await userEvent.click(deleteCampaignButton);
+    
+    expect(global.fetch).toHaveBeenCalled();
+    expect(toast.success).toHaveBeenCalledWith("Campaign successfully deleted.");
+    expect(toast.error).not.toHaveBeenCalled();
+})

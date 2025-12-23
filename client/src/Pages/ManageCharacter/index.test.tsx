@@ -94,3 +94,29 @@ test("Character changes is saved successfully", async () => {
     expect(toast.success).toHaveBeenCalledWith("Character successfully updated.");
     expect(toast.error).not.toHaveBeenCalled();
 })
+
+test("Character can be deleted", async () => {
+    global.fetch = jest.fn()
+    .mockResolvedValueOnce({
+        json: async() => ({
+            status: 200,
+            data: mockCharacter,
+        }),
+    })
+    .mockResolvedValueOnce({
+        json: async () => ({
+            status: 200,
+            message: "Character successfully deleted.",
+        }),
+    }) as jest.Mock;
+    renderComponent("Hopper");
+    await screen.findByLabelText(/name/i);
+    const deleteConfirmCheckBox = screen.getByRole("checkbox", {name: /i understand/i});
+    await userEvent.click(deleteConfirmCheckBox);
+    const deleteCharacterButton = screen.getByRole("button", {name: /delete character/i});
+    await userEvent.click(deleteCharacterButton);
+    
+    expect(global.fetch).toHaveBeenCalled();
+    expect(toast.success).toHaveBeenCalledWith("Character successfully deleted.");
+    expect(toast.error).not.toHaveBeenCalled();
+})
